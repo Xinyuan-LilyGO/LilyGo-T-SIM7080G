@@ -28,7 +28,7 @@ void setup()
 
     // while (!Serial);
 
-    // delay(3000);
+    delay(3000);
 
     Serial.println();
 

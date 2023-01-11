@@ -7,7 +7,7 @@
  *
  */
 // See all AT commands, if wanted
-#define DUMP_AT_COMMANDS
+// #define DUMP_AT_COMMANDS
 
 #define TINY_GSM_RX_BUFFER 1024
 
@@ -86,19 +86,16 @@ void setuoModem()
         s = modem.getRegistrationStatus();
         int16_t sq = modem.getSignalQuality();
 
-        switch (s) {
-        case REG_SEARCHING:
+        if ( s == REG_SEARCHING) {
             Serial.print("Searching...");
-            break;
-        default:
+        } else {
             Serial.print("Other code:");
             Serial.print(s);
             break;
         }
-        Serial.print("Signal:");
+        Serial.print("  Signal:");
         Serial.println(sq);
         delay(1000);
-
     } while (s != REG_OK_HOME && s != REG_OK_ROAMING);
 
     Serial.println();
