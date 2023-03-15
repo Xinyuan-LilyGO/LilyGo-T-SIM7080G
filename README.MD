@@ -58,7 +58,7 @@ examples
 4. Insert USB into the PC and click Upload <If the upload fails, keep pressing the BOOT button, click RST, and then click Upload. When the upload is complete, click RST to exit the download mode>
 
 ## 3️⃣ Tips:
-0. SIM7080G cannot connect to cellular network and GPS positioning at the same time
+0. ⚠ SIM7080G cannot connect to cellular network and GPS positioning at the same time
 1. Board integrated PMU (Power management chip), with short circuit and overload protection. By default,`PWRKEY`needs to be pressed for 6 seconds to turn off the board power supply, and press`PWRKEY`for 128 milliseconds to turn on the power supply. If you need to modify the power off pressing time, please refer to`MinimalPowersExample`
 2. If the charging function is required, the`PMU` `TS Pin`detection function needs to be turned off. By default, there is no NTC sensor on the board, so the `TS Pin` detection needs to be disabled before the charging function can be used normally. If the`TS Pin`detection function is not turned off, the PMU charging indicator will flash after the battery is inserted, and charging will be disabled
 3. The board `VSYS` is the internal 5V boost output of the PMU, which can only be output but not input. Please do not connect an external power supply load greater than `500mA`
