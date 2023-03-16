@@ -1,0 +1,57 @@
+#######################################
+# Syntax Coloring Map For BIGIOT Platform Library By lewis He
+# github:https://github.com/lewisxhe
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+BIGIOT  KEYWORD1
+xEamil  KEYWORD1
+ServerChan  KEYWORD1
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+login   KEYWORD2
+connectAttack	KEYWORD2
+disconnectAttack    KEYWORD2
+eventAttach KEYWORD2
+handle  KEYWORD2
+upload  KEYWORD2
+loaction    KEYWORD2
+sendAlarm   KEYWORD2
+isOnline    KEYWORD2
+deviceName  KEYWORD2
+setHeartFreq    KEYWORD2
+setEmailHost    KEYWORD2
+setSender   KEYWORD2
+setRecipient    KEYWORD2
+sendEmail   KEYWORD2
+setSCKEY    KEYWORD2
+sendWechat  KEYWORD2
+uploadPhoto KEYWORD2
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+DISCONNECT  LITERAL1
+INVALD  LITERAL1
+STOP    LITERAL1
+PLAY    LITERAL1
+OFFON   LITERAL1
+MINUS   LITERAL1
+UP  LITERAL1
+PLUS    LITERAL1
+LEFT    LITERAL1
+PAUSE   LITERAL1
+RIGHT   LITERAL1
+BACKWARD    LITERAL1
+DOWN    LITERAL1
+FPRWARD LITERAL1
+CUSTOM  LITERAL1
+
