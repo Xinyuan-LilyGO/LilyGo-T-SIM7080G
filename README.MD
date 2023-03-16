@@ -8,6 +8,7 @@
 
 examples 
 ├─AllFunction                   # Full function test example
+├─BIGIOT_Gnss_Upload            # Upload positioning coordinates to BIGIOT IOT,Timed wake-up consumes about 1.2mA
 ├─MinimalCameraExample          # Example of camera use
 ├─MinimalModemGPSExample        # SIM7080G GPS example
 ├─MinimalModemNBIOTExample      # SIM7080G NBIOT example
@@ -44,7 +45,7 @@ examples
 2. Copy all the folders in the `LilyGo-T-SIM7080G/lib` directory to `<C:\Users\UserName\Documents\Arduino\libraries>`. If there is no `libraries` directory, please create a new one. Please note that you are not copying the `lib` directory, but copying the folders in the lib directory
 3. Open ArduinoIDE -> Tools
 - Board -> ESP32S3 Dev Module
-- USB CDC On Boot -> Enable
+- USB CDC On Boot -> Enable  ## Note that you need to change Enable to Disable when USB is not connected, so USB CDC will not prevent the board from starting
 - CPU Frequency -> 240MHz
 - USB DFU On Boot -> Disable
 - Flash Mode -> QIO 80MHz
@@ -71,6 +72,7 @@ examples
 10. If the camera is not connected, all IO ports are available. If the camera is used, the board has only `GPIO45` and `GPIO46` is idle
 11. `T-SIM7080G` uses `Octal SPI PSRAM`, so **GPIO35~GPIO37** is unavailable. Please do not use these IOs
 12. ⚠ **Please understand the risks to be faced before changing the voltage of peripherals, otherwise do not try to change the voltage of cameras and other on-board devices, which may cause permanent damage**
+13. ⚠ **Please do not turn off the BLDO3 power supply, otherwise ESP32S3 and SIM7080G cannot communicate normally**
 
 ## 4️⃣ Pins:
 
@@ -95,7 +97,8 @@ examples
 | ------ | --- | --- | ---- |
 | GPIO   | 39  | 38  | 40   |
 
+## Power domain
 
-| PMU Channel | Modem          | Camera            | ESP32S3 | SDCard |
-| ----------- | -------------- | ----------------- | ------- | ------ |
-|             | DC3/BLDO2(GPS) | ALDO1/ALDO2/ALDO4 | DC1     | ALDO3  |
+| Modem          | Camera            | ESP32S3 | SDCard | Level conversion |
+| -------------- | ----------------- | ------- | ------ | ---------------- |
+| DC3/BLDO2(GPS) | ALDO1/ALDO2/ALDO4 | DC1     | ALDO3  | BLDO1            |

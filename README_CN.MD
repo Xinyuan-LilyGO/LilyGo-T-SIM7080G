@@ -12,6 +12,7 @@
 
 examples 
 ├─AllFunction                       # 全功能测试示例
+├─BIGIOT_Gnss_Upload                # 上传定位坐标到BIGIOT 平台，定时唤醒消耗电流约1.2mA
 ├─MinimalCameraExample              # 摄像头使用示例
 ├─MinimalModemGPSExample            # SIM7080G GPS 示例
 ├─MinimalModemNBIOTExample          # SIM7080G NBIOT 示例
@@ -49,7 +50,7 @@ examples
 2. 将 `LilyGo-T-SIM7080G/lib` 目录内的所有文件夹拷贝到`<C:\Users\UserName\Documents\Arduino\libraries>`,如果没有`libraries`目录,请新建,请注意,不是拷贝`lib`目录,而是拷贝lib目录里面的文件夹
 3. 打开ArduinoIDE -> Tools 
    - Board -> ESP32S3 Dev Module
-   - USB CDC On Boot -> Enable
+   - USB CDC On Boot -> Enable   # 注意，在不连接USB的时候你需要将Enable改为Disable，这样USB CDC 不会阻止板子的启动
    - CPU Frequency -> 240MHz
    - USB DFU On Boot -> Disable
    - Flash Mode -> QIO 80MHz
@@ -78,6 +79,8 @@ examples
 10. 如果在不接摄像头的情况下,所有IO口均可用,如果使用摄像头则板子则只有GPIO45,GPIO46为空闲
 11. `T-SIM7080G` 使用 `Octal SPI` ,所以 **GPIO35 ~ GPIO37** 为不可用,请不要使用这几个IO
 12. ⚠ **请在更改外设电压之前明白需要面临的风险,否则请不要尝试更改摄像头和其他板载设备的电压,可能会面临永久性的损坏**
+13. ⚠ **请不要关闭BLDO3电源，否则ESP32S3与SIM7080G无法正常通讯.**
+
 
 ## 4️⃣ 引脚分布:
 
@@ -101,7 +104,8 @@ examples
 | ------ | --- | --- | ---- |
 | GPIO   | 39  | 38  | 40   |
 
+## 电源域
 
-| PMU Channel | Modem          | Camera            | ESP32S3 | SDCard |
-| ----------- | -------------- | ----------------- | ------- | ------ |
-|             | DC3/BLDO2(GPS) | ALDO1/ALDO2/ALDO4 | DC1     | ALDO3  |
+| Modem          | Camera            | ESP32S3 | SDCard | Level conversion |
+| -------------- | ----------------- | ------- | ------ | ---------------- |
+| DC3/BLDO2(GPS) | ALDO1/ALDO2/ALDO4 | DC1     | ALDO3  | BLDO1            |
