@@ -66,11 +66,11 @@ const char *passwd = "Your wifi password";
 #endif
 
 
-const char *id = "7055";                //platform device id
-const char *apikey = "7c49a76ba";      //platform device api key
-const char *usrkey = "";               //platform user key , if you are not using encrypted login,you can leave it blank
+const char *id = "YOUR DEVICE ID";                //platform device id
+const char *apikey = "YOUR APIKEY";        //platform device api key
+const char *usrkey = "";                 //platform user key , if you are not using encrypted login,you can leave it blank
 
-#define BIGIOT_LOACTION_STREAM_ID   "25684"             //Positioning data interface id
+#define BIGIOT_LOACTION_STREAM_ID   "Positioning data interface id"             //Positioning data interface id
 #define STREAM_UPLOAD_TIMEOUT       10000               //Data update interval
 
 // Set to wake up every 5 minutes to send positioning coordinates to the platform
