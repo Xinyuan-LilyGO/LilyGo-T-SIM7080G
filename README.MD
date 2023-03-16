@@ -72,7 +72,7 @@ examples
 10. If the camera is not connected, all IO ports are available. If the camera is used, the board has only `GPIO45` and `GPIO46` is idle
 11. `T-SIM7080G` uses `Octal SPI PSRAM`, so **GPIO35~GPIO37** is unavailable. Please do not use these IOs
 12. ⚠ **Please understand the risks to be faced before changing the voltage of peripherals, otherwise do not try to change the voltage of cameras and other on-board devices, which may cause permanent damage**
-13. ⚠ **Please do not turn off the BLDO3 power supply, otherwise ESP32S3 and SIM7080G cannot communicate normally**
+13. ⚠ **Please do not turn off the BLDO1 power supply, otherwise ESP32S3 and SIM7080G cannot communicate normally**
 
 ## 4️⃣ Pins:
 
