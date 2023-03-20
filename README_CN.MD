@@ -80,9 +80,15 @@ examples
 11. `T-SIM7080G` 使用 `Octal SPI` ,所以 **GPIO35 ~ GPIO37** 为不可用,请不要使用这几个IO
 12. ⚠ **请在更改外设电压之前明白需要面临的风险,否则请不要尝试更改摄像头和其他板载设备的电压,可能会面临永久性的损坏**
 13. ⚠ **请不要关闭BLDO1电源，否则ESP32S3与SIM7080G无法正常通讯.**
+14. 更新调制解调器内置固件请查看[操作说明](./docs/sim7080_update_firmware.md),一般情况下不建议升级固件.
 
 
-## 4️⃣ 引脚分布:
+## 4️⃣ 在哪购买:
+
+![AliExpress](https://www.aliexpress.us/item/3256805002673427.html)
+![LilyGo Store](https://www.lilygo.cc/products/t-sim7080-s3)
+
+## 5️⃣ 引脚分布:
 
 | Camera     | PWDN   | Reset  | XCLK   | SDA    | SCL    | VSYNC  | HREF   | PCLK   |
 | ---------- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |

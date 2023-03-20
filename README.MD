@@ -2,6 +2,8 @@
 
 ## **English | [中文](README_CN.MD)**
 
+
+
 ## 1️⃣ Examples preview
 
 ````
@@ -73,8 +75,16 @@ examples
 11. `T-SIM7080G` uses `Octal SPI PSRAM`, so **GPIO35~GPIO37** is unavailable. Please do not use these IOs
 12. ⚠ **Please understand the risks to be faced before changing the voltage of peripherals, otherwise do not try to change the voltage of cameras and other on-board devices, which may cause permanent damage**
 13. ⚠ **Please do not turn off the BLDO1 power supply, otherwise ESP32S3 and SIM7080G cannot communicate normally**
+14. Please check the [Operating Instructions](./docs/sim7080_update_firmware.md) for updating the built-in firmware of the modem. Generally, upgrading the firmware is not recommended
 
-## 4️⃣ Pins:
+## 4️⃣ Where to buy:
+
+![AliExpress](https://www.aliexpress.us/item/3256805002673427.html)
+![LilyGo Store](https://www.lilygo.cc/products/t-sim7080-s3)
+
+
+
+## 5️⃣ Pins:
 
 
 | Camera     | PWDN   | Reset  | XCLK   | SDA    | SCL    | VSYNC  | HREF   | PCLK   |
