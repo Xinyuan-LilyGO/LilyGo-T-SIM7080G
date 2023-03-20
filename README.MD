@@ -79,8 +79,8 @@ examples
 
 ## 4️⃣ Where to buy:
 
-![AliExpress](https://www.aliexpress.us/item/3256805002673427.html)
-![LilyGo Store](https://www.lilygo.cc/products/t-sim7080-s3)
+1. [AliExpress](https://www.aliexpress.us/item/3256805002673427.html)
+2. [LilyGo Store](https://www.lilygo.cc/products/t-sim7080-s3)
 
 
 
