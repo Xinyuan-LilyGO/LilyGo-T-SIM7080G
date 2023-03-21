@@ -12,6 +12,10 @@
 
 examples 
 ├─AllFunction                       # 全功能测试示例
+├─BLE5_extended_scan                # 官方BLE5.0示例
+├─BLE5_multi_advertising            # 官方BLE5.0示例
+├─BLE5_periodic_advertising         # 官方BLE5.0示例    
+├─BLE5_periodic_sync                # 官方BLE5.0示例
 ├─BIGIOT_Gnss_Upload                # 上传定位坐标到BIGIOT 平台，定时唤醒消耗电流约1.2mA
 ├─MinimalCameraExample              # 摄像头使用示例
 ├─MinimalModemGPSExample            # SIM7080G GPS 示例

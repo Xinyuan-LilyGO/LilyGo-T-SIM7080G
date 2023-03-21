@@ -10,6 +10,10 @@
 
 examples 
 ├─AllFunction                   # Full function test example
+├─BLE5_extended_scan            # Official BLE5 Example
+├─BLE5_multi_advertising        # Official BLE5 Example
+├─BLE5_periodic_advertising     # Official BLE5 Example    
+├─BLE5_periodic_sync            # Official BLE5 Example
 ├─BIGIOT_Gnss_Upload            # Upload positioning coordinates to BIGIOT IOT,Timed wake-up consumes about 1.2mA
 ├─MinimalCameraExample          # Example of camera use
 ├─MinimalModemGPSExample        # SIM7080G GPS example
