@@ -8,7 +8,7 @@
 XPowersPMU  PMU;
 
 // See all AT commands, if wanted
-#define DUMP_AT_COMMANDS
+// #define DUMP_AT_COMMANDS
 
 #define TINY_GSM_RX_BUFFER 1024
 
@@ -304,6 +304,9 @@ void setup()
     }
 
 
+    /*********************************
+    * step 6 : Obtain location information
+    ***********************************/
     PMU.setChargingLedMode(XPOWERS_CHG_LED_BLINK_1HZ);
     while (1) {
         //Upload targeting data every 10 seconds
@@ -333,6 +336,10 @@ void setup()
     // After successful positioning, the PMU charging indicator flashes quickly
     PMU.setChargingLedMode(XPOWERS_CHG_LED_BLINK_4HZ);
 
+
+    /*********************************
+    * step 7 : Connect to the network
+    ***********************************/
     // Activate network bearer, APN can not be configured by default,
     // if the SIM card is locked, please configure the correct APN and user password, use the gprsConnect() method
     modem.sendAT("+CNACT=0,1");
@@ -345,9 +352,6 @@ void setup()
     Serial.print("GPRS status:");
     Serial.println(res ? "connected" : "not connected");
 
-    /*********************************
-    * step 6 : Send HTTP request
-    ***********************************/
 #ifdef USING_WIFI
     WiFi.begin(ssid, passwd);
 
@@ -363,6 +367,9 @@ void setup()
 #endif
 
 
+    /*********************************
+    * step 8 : Connect to the BIGIOT
+    ***********************************/
     //Regist platform command event hander
     bigiot.eventAttach(eventCallback);
 
