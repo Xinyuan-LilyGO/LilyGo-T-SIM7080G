@@ -170,6 +170,18 @@ void setup()
     Serial.print("Network register info:");
     Serial.println(register_info[s]);
 
+
+    //If you do not know APN, please consult the operator or comment out this code
+    //comment start
+    const char *apn = "Your APN";
+    modem.sendAT("+CNCFG=0,1,\"", apn, "\"");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Config apn Failed!");
+        return;
+    }
+    //comment end ..
+
+
     // Activate network bearer, APN can not be configured by default,
     // if the SIM card is locked, please configure the correct APN and user password, use the gprsConnect() method
     modem.sendAT("+CNACT=0,1");
