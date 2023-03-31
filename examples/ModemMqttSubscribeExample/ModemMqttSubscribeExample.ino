@@ -244,15 +244,16 @@ void setup()
         return;
     }
 
+    int8_t ret;
     do {
 
         modem.sendAT("+SMCONN");
-        res = modem.waitResponse(30000);
-        if (!res) {
+        ret = modem.waitResponse(30000);
+        if (ret != 1) {
             Serial.println("Connect failed, retry connect ..."); delay(1000);
         }
 
-    } while (res != 1);
+    } while (ret != 1);
 
 
     Serial.println("MQTT Client connected!");

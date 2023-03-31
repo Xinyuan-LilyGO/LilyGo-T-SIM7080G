@@ -379,8 +379,8 @@ void setup()
 
 
     modem.sendAT("+SMCONN");
-    res = modem.waitResponse(30000);
-    if (!res) {
+    int8_t ret = modem.waitResponse(30000);
+    if (ret != 1) {
         Serial.println("Connect failed, retry connect ...");
         delay(1000);
         return;
