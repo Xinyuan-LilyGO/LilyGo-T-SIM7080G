@@ -97,6 +97,13 @@ examples
 | **Camera** | **D9** | **D8** | **D7** | **D6** | **D5** | **D4** | **D3** | **D2** |
 | GPIO       | 9      | 10     | 11     | 13     | 21     | 48     | 47     | 14     |
 
+* If you do not use a camera, you can freely allocate IO ports here. Assuming you need to allocate I2C, please use the display to call Wire and pass the required IO ports, such as
+    ```
+    int sda = 13;  // You can also use other IO ports
+    int scl = 21;  // You can also use other IO ports
+    Wire.begin(sda,scl)
+    ```
+
 | Modem | PWR | RXD | TXD | RI  | DTR |
 | ----- | --- | --- | --- | --- | --- |
 | GPIO  | 41  | 4   | 5   | 3   | 42  |
