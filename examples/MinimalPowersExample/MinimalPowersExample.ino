@@ -37,12 +37,28 @@ void setup()
      *  step 1 : Initialize power chip,
      *  turn on modem and gps antenna power channel
     ***********************************/
-    if (!PMU.begin(Wire, AXP2101_SLAVE_ADDRESS, I2C_SDA, I2C_SCL)) {
+    bool res;
+    //Use Wire1
+    res = PMU.begin(Wire1, AXP2101_SLAVE_ADDRESS, I2C_SDA, I2C_SCL);
+    if (!res) {
         Serial.println("Failed to initialize power.....");
         while (1) {
             delay(5000);
         }
     }
+
+
+    // I2C sensor call example
+    int sda = 13;  // You can also use other IO ports
+    int scl = 21;  // You can also use other IO ports
+    Wire.begin(sda, scl);
+
+    //**\
+
+    //Other i2c sensors can be externally connected to 13,21
+
+    //**\
+
 
     Serial.printf("getID:0x%x\n", PMU.getChipID());
 
