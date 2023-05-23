@@ -9,7 +9,7 @@
 #include <Arduino.h>
 #include <FS.h>
 #include <SD_MMC.h>
-#define XPOWERS_CHIP_AXP2102
+#define XPOWERS_CHIP_AXP2101
 #include "XPowersLib.h"
 #include "utilities.h"
 

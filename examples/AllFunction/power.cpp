@@ -8,7 +8,7 @@
  */
 #include "power.h"
 
-#define XPOWERS_CHIP_AXP2102
+#define XPOWERS_CHIP_AXP2101
 #include "XPowersLib.h"
 #include "utilities.h"
 XPowersPMU PMU;

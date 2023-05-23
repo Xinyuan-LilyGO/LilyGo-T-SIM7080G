@@ -11,7 +11,7 @@
 
 
 #include <Arduino.h>
-#define XPOWERS_CHIP_AXP2102
+#define XPOWERS_CHIP_AXP2101
 #include "XPowersLib.h"
 #include "utilities.h"
 
@@ -133,7 +133,7 @@ const char *ca_cert =
 
 
 // Your GPRS credentials, if any
-const char apn[] = "CNNBIOT";
+const char apn[] = "CMNBIOT";
 const char gprsUser[] = "";
 const char gprsPass[] = "";
 
@@ -143,8 +143,8 @@ const int  port       = 8884;
 char buffer[1024]     = {0};
 
 
-char username[] = "<MQTT USERNAME>";
-char password[] = "<MQTT PASSWORD>";
+char username[] = "";
+char password[] = "";
 char clientID[] = "SIM7080_ClientID";
 
 bool isConnect()
@@ -238,6 +238,7 @@ bool setCertificate(const char *cert_pem,
 
 void setup()
 {
+    bool res;
 
     Serial.begin(115200);
 
@@ -310,6 +311,12 @@ void setup()
         return ;
     }
 
+    // Disable RF
+    modem.sendAT("+CFUN=0");
+    if (modem.waitResponse(20000UL) != 1) {
+        Serial.println("Disable RF Failed!");
+    }
+
 
     /*********************************
      * step 4 : Set the network mode to NB-IOT
@@ -324,6 +331,20 @@ void setup()
     uint8_t mode = modem.getNetworkMode();
 
     Serial.printf("getNetworkMode:%u getPreferredMode:%u\n", mode, pre);
+
+
+    //Set the APN manually. Some operators need to set APN first when registering the network.
+    modem.sendAT("+CGDCONT=1,\"IP\",\"", apn, "\"");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Set operators apn Failed!");
+        return;
+    }
+
+    // Enable RF
+    modem.sendAT("+CFUN=1");
+    if (modem.waitResponse(20000UL) != 1) {
+        Serial.println("Enable RF Failed!");
+    }
 
 
     /*********************************
@@ -343,23 +364,34 @@ void setup()
     Serial.print("Network register info:");
     Serial.println(register_info[s]);
 
-
-    bool res = modem.isGprsConnected();
-    if (!res) {
-        // Activate network bearer, APN can not be configured by default,
-        // if the SIM card is locked, please configure the correct APN and user password, use the gprsConnect() method
-        modem.sendAT("+CNACT=0,1");
-        if (modem.waitResponse() != 1) {
-            Serial.println("Activate network bearer Failed!");
-            return;
+    do {
+        modem.sendAT("+CGATT?");
+        res = modem.waitResponse(3000UL);
+        if (res != 1) {
+            Serial.println("Check PS service. 1 indicates PS has attached failed");
+            delay(1500);
         }
-        // if (!modem.gprsConnect(apn, gprsUser, gprsPass)) {
-        //     return ;
-        // }
+    } while (res != 1);
+    Serial.println("Check PS service. 1 indicates PS has attached successed!");
+
+
+    //Before activation please use AT+CNCFG to set APN\user name\password if needed.
+    modem.sendAT("+CNCFG=0,1,\"", apn, "\"");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Set operators apn Failed!");
+        return;
     }
 
-    Serial.print("GPRS status:");
-    Serial.println(res ? "connected" : "not connected");
+    modem.sendAT("+CNACT=0,1");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Activate network bearer Failed!");
+        return;
+    }
+
+
+    modem.sendAT("+CNACT?");
+    modem.waitResponse() ;
+
 
     /*********************************
     * step 6 : setup MQTT Client and Certificate
@@ -379,6 +411,25 @@ void setup()
     if (modem.waitResponse() != 1) {
         return;
     }
+
+    snprintf(buffer, 1024, "+SMCONF=\"KEEPTIME\",60");
+    modem.sendAT(buffer);
+    if (modem.waitResponse() != 1) {
+        return;
+    }
+
+    snprintf(buffer, 1024, "+SMCONF=\"CLEANSS\",1");
+    modem.sendAT(buffer);
+    if (modem.waitResponse() != 1) {
+        return;
+    }
+
+    snprintf(buffer, 1024, "+SMCONF=\"CLIENTID\",\"%s\"", clientID);
+    modem.sendAT(buffer);
+    if (modem.waitResponse() != 1) {
+        return;
+    }
+
     snprintf(buffer, 1024, "+SMCONF=\"USERNAME\",\"%s\"", username);
     modem.sendAT(buffer);
     if (modem.waitResponse() != 1) {
@@ -386,12 +437,6 @@ void setup()
     }
 
     snprintf(buffer, 1024, "+SMCONF=\"PASSWORD\",\"%s\"", password);
-    modem.sendAT(buffer);
-    if (modem.waitResponse() != 1) {
-        return;
-    }
-
-    snprintf(buffer, 1024, "+SMCONF=\"CLIENTID\",\"%s\"", clientID);
     modem.sendAT(buffer);
     if (modem.waitResponse() != 1) {
         return;

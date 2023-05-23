@@ -12,7 +12,7 @@
  *            4. Upgrade SIM7080 built-in firmware with upgrade software
  */
 #include <Arduino.h>
-#define XPOWERS_CHIP_AXP2102
+#define XPOWERS_CHIP_AXP2101
 #include "XPowersLib.h"
 #include "utilities.h"
 
