@@ -269,10 +269,10 @@ enablePwrSourcePullDown	KEYWORD2
 disablePwrSourcePullDown	KEYWORD2
 enableOverTemperatureLevel2PowerOff	KEYWORD2
 disableOverTemperaturePowerOff	KEYWORD2
-enablePwrOnOverVolOffLevelPowerOff	KEYWORD2
-disablePwrOnOverVolOffLevelPowerOff	KEYWORD2
-enablePwrOffSelectFunction	KEYWORD2
-disablePwrOffSelectFunction	KEYWORD2
+enableLongPressShutdown	KEYWORD2
+disableLongPressShutdown	KEYWORD2
+setLongPressRestart	KEYWORD2
+setLongPressPowerOFF	KEYWORD2
 enableDCHighVoltageTurnOff	KEYWORD2
 disableDCHighVoltageTurnOff	KEYWORD2
 enableDC5LowVoltageTurnOff	KEYWORD2
@@ -508,7 +508,7 @@ XPOWERS_TIMER_TIMEOUT_IRQ	LITERAL1
 XPOWERS_ALL_IRQ	LITERAL1
 XPOWERS_CHIP_AXP192	LITERAL1
 XPOWERS_CHIP_AXP202	LITERAL1
-XPOWERS_CHIP_AXP2102	LITERAL1
+XPOWERS_CHIP_AXP2101	LITERAL1
 
 
 # AXP2102

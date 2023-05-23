@@ -15,14 +15,15 @@
 #include "XPowersAXP192.tpp"
 typedef XPowersAXP192 XPowersPMU;
 #elif defined(XPOWERS_CHIP_AXP202)
-// #include "XPowersAXP202.tpp"
-// typedef XPowersAXP202 XPowersPMU;
-#error "Not currently supported!"
-#elif defined(XPOWERS_CHIP_AXP2102)
+#include "XPowersAXP202.tpp"
+typedef XPowersAXP202 XPowersPMU;
+#elif defined(XPOWERS_CHIP_AXP2101)
 #include "XPowersAXP2101.tpp"
 typedef XPowersAXP2101 XPowersPMU;
 #else
-#error "Please define power management chip model"
+#include "XPowersAXP192.tpp"
+#include "XPowersAXP202.tpp"
+#include "XPowersAXP2101.tpp"
 #endif
 
 
