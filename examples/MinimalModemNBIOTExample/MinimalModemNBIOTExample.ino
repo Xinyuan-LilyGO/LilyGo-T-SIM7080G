@@ -49,8 +49,7 @@ enum {
 
 void getPsmTimer();
 
-// Your GPRS credentials, if any
-const char apn[] = "CNNBIOT";
+
 // const char apn[] = "ibasis.iot";
 const char gprsUser[] = "";
 const char gprsPass[] = "";
@@ -60,7 +59,13 @@ bool  level = false;
 const char server[]   = "vsh.pp.ua";
 const char resource[] = "/TinyGSM/logo.txt";
 
+//!! Set the APN manually. Some operators need to set APN first when registering the network.
+//!! Set the APN manually. Some operators need to set APN first when registering the network.
+//!! Set the APN manually. Some operators need to set APN first when registering the network.
+// Using 7080G with Hologram.io , https://github.com/Xinyuan-LilyGO/LilyGo-T-SIM7080G/issues/19
+// const char *apn = "hologram";
 
+const char *apn = "Your APN";
 
 void setup()
 {
@@ -135,6 +140,11 @@ void setup()
         return ;
     }
 
+    // Disable RF
+    modem.sendAT("+CFUN=0");
+    if (modem.waitResponse(20000UL) != 1) {
+        Serial.println("Disable RF Failed!");
+    }
 
     /*********************************
      * step 4 : Set the network mode to NB-IOT
@@ -150,6 +160,26 @@ void setup()
 
     Serial.printf("getNetworkMode:%u getPreferredMode:%u\n", mode, pre);
 
+
+    //Set the APN manually. Some operators need to set APN first when registering the network.
+    modem.sendAT("+CGDCONT=1,\"IP\",\"", apn, "\"");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Set operators apn Failed!");
+        return;
+    }
+
+    //!! Set the APN manually. Some operators need to set APN first when registering the network.
+    modem.sendAT("+CNCFG=0,1,\"", apn, "\"");
+    if (modem.waitResponse() != 1) {
+        Serial.println("Config apn Failed!");
+        return;
+    }
+
+    // Enable RF
+    modem.sendAT("+CFUN=1");
+    if (modem.waitResponse(20000UL) != 1) {
+        Serial.println("Enable RF Failed!");
+    }
 
     /*********************************
     * step 5 : Wait for the network registration to succeed
@@ -171,15 +201,7 @@ void setup()
     Serial.println(register_info[s]);
 
 
-    //If you do not know APN, please consult the operator or comment out this code
-    //comment start
-    const char *apn = "Your APN";
-    modem.sendAT("+CNCFG=0,1,\"", apn, "\"");
-    if (modem.waitResponse() != 1) {
-        Serial.println("Config apn Failed!");
-        return;
-    }
-    //comment end ..
+
 
 
     // Activate network bearer, APN can not be configured by default,
