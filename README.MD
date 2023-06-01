@@ -25,7 +25,10 @@ examples
 ├─MinimalSDCardExample          # Example of using SDCard
 ├─ModemMqttPulishExample        # MQTT Pulish Example            
 ├─ModemMqttsExample             # MQTTS Example    
-└─ModemMqttSubscribeExample     # MQTT Subscribe Example           
+├─ModemMqttSubscribeExample     # MQTT Subscribe Example     
+├─SIM7080G-ATT-NB-IOT-AWS-MQTT  # MQTTS AWS By @bootcampiot
+├─SIM7080G-ATT-NB-IOT-HTTP-HTTPS # HTTP/HTTPS  By @bootcampiot
+└─SIM7080G-ATT-NB-IOT-SSL-Mosquitto # MQTTS Mosquitto By @bootcampiot
 
 ````
 
