@@ -13,13 +13,13 @@
  */
 
 #include <Arduino.h>
-#define XPOWERS_CHIP_AXP2102
+#define XPOWERS_CHIP_AXP2101
 #include "XPowersLib.h"
 #include "utilities.h"
 #include <SPI.h>
-#include "AWS_root_CA.h"
-#include "AWS_Client_CRT.h"
-#include "AWS_Client_PSK.h"
+#include "./certs/AWS_root_CA.h"
+#include "./certs/AWS_Client_CRT.h"
+#include "./certs/AWS_Client_PSK.h"
 
 // Define the clientID
 String macStr = String(ESP.getEfuseMac(), HEX); // I use the ESP32 MAC address as the clientID

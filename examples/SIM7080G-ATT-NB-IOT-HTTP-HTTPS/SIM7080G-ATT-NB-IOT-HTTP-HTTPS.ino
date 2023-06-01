@@ -6,27 +6,17 @@
  *      Thank Lewis He (lewishe@outlook.com) for providing these helpful examples.
  *      Please note that my use of this code falls under MIT license or terms of use of the original source,
  *      I am not responsible for any damages or issues that may arise from the use of this code.
- * @brief     Support T-SIM7080G to access test.mosquitto.org on TLS/SSL through AT&T NB-IOT radio
+ * @brief     Support T-SIM7080G to access a testing HTTP/HTTPS server through AT&T NB-IOT radio
  * @license   MIT
  * @date      2023-04-10
  * @version   1.0.0
  */
 
 #include <Arduino.h>
-#define XPOWERS_CHIP_AXP2102
+#define XPOWERS_CHIP_AXP2101
 #include "XPowersLib.h"
 #include "utilities.h"
 #include <SPI.h>
-#include "Mosquitto_root_CA.h"
-#include "Mosquitto_Client_CRT.h"
-#include "Mosquitto_Client_PSK.h"
-
-// Define the clientID
-const char clientID[] = "T-SIM7080G"; // could be any string since SSL accessing to test.mosquitto.org does not ask for it.
-
-// Define the MQTT Server URL and Port - test.mosquitto.org:8884 for MQTT over TLS
-const char MQTT_Server_URL[] = "test.mosquitto.org";
-const int MQTT_Server_Port = 8884;
 
 char buffer[1024] = {0};
 
@@ -65,87 +55,6 @@ enum
 };
 
 bool level = false;
-
-// retrieve the Power Saving Mode (PSM) timer value from the modem
-void getPsmTimer()
-{
-    modem.sendAT("+CPSMS?"); // Send AT command to query PSM settings
-
-    if (modem.waitResponse("+CPSMS:") != 1)
-    {
-        Serial.println("Failed to retrieve PSM timer");
-        return;
-    }
-
-    String response = modem.stream.readStringUntil('\r');
-    // Parse the response to extract PSM timer values (T3412, T3324)
-
-    Serial.print("PSM Timer values: ");
-    Serial.println(response);
-}
-
-/* Define the writeCaFiles function in this C++ code snippet takes four parameters: an integer index, a const char pointer filename, a const char pointer data, and a size_t variable length.
-The function is designed to write the provided data to a file with a specified name. */
-void writeCaFiles(int index, const char *filename, const char *data, size_t length)
-{
-    modem.sendAT("+CFSTERM");
-    modem.waitResponse();
-
-    modem.sendAT("+CFSINIT");
-    if (modem.waitResponse() != 1)
-    {
-        Serial.println("INITFS FAILED");
-        return;
-    }
-    // AT+CFSWFILE=<index>,<filename>,<mode>,<filesize>,<input time>
-    // <index>
-    //      Directory of AP filesystem:
-    //      0 "/custapp/" 1 "/fota/" 2 "/datatx/" 3 "/customer/"
-    // <mode>
-    //      0 If the file already existed, write the data at the beginning of the
-    //      file. 1 If the file already existed, add the data at the end o
-    // <file size>
-    //      File size should be less than 10240 bytes. <input time> Millisecond,
-    //      should send file during this period or you can’t send file when
-    //      timeout. The value should be less
-    // <input time> Millisecond, should send file during this period or you can’t
-    // send file when timeout. The value should be less than 10000 ms.
-
-    size_t payloadLength = length;
-    size_t totalSize = payloadLength;
-    size_t alreadyWrite = 0;
-
-    while (totalSize > 0)
-    {
-        size_t writeSize = totalSize > 10000 ? 10000 : totalSize;
-
-        modem.sendAT("+CFSWFILE=", index, ",", "\"", filename, "\"", ",", !(totalSize == payloadLength), ",", writeSize, ",", 10000);
-        modem.waitResponse(30000UL, "DOWNLOAD");
-    REWRITE:
-        modem.stream.write(data + alreadyWrite, writeSize);
-        if (modem.waitResponse(30000UL) == 1)
-        {
-            alreadyWrite += writeSize;
-            totalSize -= writeSize;
-            Serial.printf("Writing:%d overage:%d\n", writeSize, totalSize);
-        }
-        else
-        {
-            Serial.println("Write failed!");
-            delay(1000);
-            goto REWRITE;
-        }
-    }
-
-    Serial.println("Wirte done!!!");
-
-    modem.sendAT("+CFSTERM");
-    if (modem.waitResponse() != 1)
-    {
-        Serial.println("CFSTERM FAILED");
-        return;
-    }
-}
 
 /* Initialization modem */
 void setup()
@@ -242,8 +151,8 @@ void setup()
     Serial.println("............................................................................Step 4");
     Serial.println("start to set the network mode to NB-IOT ");
 
-    modem.setNetworkMode(2); // use automatic
-
+    modem.setNetworkMode(38); // 2 for Auto, 38 for LTE only
+    
     modem.setPreferredMode(MODEM_NB_IOT);
 
     uint8_t pre = modem.getPreferredMode();
@@ -260,12 +169,19 @@ void setup()
     Serial.println("............................................................................Step 5");
     Serial.println("Start to perform network registration, configure APN and ping 8.8.8.8");
 
-    // Important !
-    // To use AT&T NB-IOT network, you must correctly configure as below ATT NB-IoT OneRate APN "m2mNB16.com.attz",
+    modem.sendAT("+COPS=0,0,\"AT&T\",9");
+    modem.waitResponse();
+
+    modem.sendAT("+CBANDCFG=\"NB-IoT\",12");  // 4: 700MHz for T-mobile, 12: 850MHz for AT&T  
+    modem.waitResponse();
+
+    modem.sendAT("+CNBS=1");
+
+    // Important ! 
+    // To use AT&T NB-IOT network, you must correctly configure as below ATT NB-IoT OneRate data plan APN "m2mNB16.com.attz",
     // Otherwise ATT will assign a general APN like "m2mglobal" which seems blocks 443,8883,8884 ports.
     Serial.println("Configuring APN...");
-    //modem.sendAT("+CGDCONT=1,\"IP\",\"m2mNB16.com.attz\"");
-    modem.sendAT("+CGDCONT=1,\"IP\",\"iot.1nce.net\"");
+    modem.sendAT("+CGDCONT=1,\"IP\",\"m2mNB16.com.attz\"");
     modem.waitResponse();
 
     RegStatus s;
@@ -432,131 +348,120 @@ void setup()
         return;
     }
     Serial.println("Step 7 done !");
+
     /***********************************
-     * step 8 : import  rootCA
+     * step 8 : Access HTTP Server at demo4570913.mockable.io (this is a test server created by my account on mockable.io)
      ***********************************/
 
     Serial.println("............................................................................Step 8");
-    Serial.println("start to write the root CA, device certificate and device private key to the modem ");
+    Serial.println("start to connect the HTTP server ");
 
-    writeCaFiles(3, "rootCA.pem", root_CA, strlen(root_CA));                 // root_CA is retrieved from Mosquitto_root_CA.h, which is downloaded from https://test.mosquitto.org/ssl/mosquitto.org.crt
-    writeCaFiles(3, "deviceCert.crt", Client_CRT, strlen(Client_CRT));       // Client_CRT is retrieved from Mosquitto_Client_CRT.h, please follow the guide to generate the device certificate in https://test.mosquitto.org/ssl/
-    writeCaFiles(3, "devicePrivateKey.pem", Client_PSK, strlen(Client_PSK)); // Client_PSK is retrieved from Mosquitto_Client_PSK.h, please follow the guide to generate the device certificate and private key in https://test.mosquitto.org/ssl/
+    TinyGsmClient client(modem, 0);
 
-    Serial.println("Step 8 done !");
-    /***********************************
-     * step 9 : Setup the configuration of TLS/SSL
-     ***********************************/
+    const int HTTP_Port = 80;
+    const char *HTTP_Server = "demo4570913.mockable.io";
 
-    Serial.println("............................................................................Step 9");
-    Serial.println("start to configure the TLS/SSL parameters ");
+    const char *Resource = "/"; // Assuming you want to access the root path
 
-    // If it is already connected, disconnect it first
-    modem.sendAT("+SMDISC");
-    modem.waitResponse();
-
-    snprintf(buffer, 1024, "+SMCONF=\"URL\",%s,%d", MQTT_Server_URL, MQTT_Server_Port);
-    modem.sendAT(buffer);
-    if (modem.waitResponse() != 1)
+    Serial.printf("Connecting to %s", HTTP_Server);
+    if (!client.connect(HTTP_Server, HTTP_Port))
     {
-        return;
-    }
-
-    // configure the clientID (line 32) for AWS IOT Core registration
-    snprintf(buffer, 1024, "+SMCONF=\"CLIENTID\",\"%s\"", clientID);
-    modem.sendAT(buffer);
-    if (modem.waitResponse() != 1)
-    {
-        return;
-    }
-
-    // configure the socket keep-alive timer
-    modem.sendAT("+SMCONF=\"KEEPTIME\",60");
-    if (modem.waitResponse() != 1)
-    {
-        return;
-    }
-    modem.sendAT("+SMCONF=\"CLEANSS\",1");
-    if (modem.waitResponse() != 1)
-    {
-        return;
-    }
-
-    // configure the SSL/TLS version for a secure socket connection
-    modem.sendAT("+CSSLCFG=\"SSLVERSION\",0,3");
-    if (modem.waitResponse() != 1)
-    {
-        return;
-    }
-    // convert the rootCA to the format required by the modem
-    // <ssltype>
-    //      1 QAPI_NET_SSL_CERTIFICATE_E
-    //      2 QAPI_NET_SSL_CA_LIST_E
-    //      3 QAPI_NET_SSL_PSK_TABLE_E
-    // AT+CSSLCFG="CONVERT",2,"rootCA.crt"
-    modem.sendAT("+CSSLCFG=\"CONVERT\",2,\"rootCA.pem\"");
-    if (modem.waitResponse() != 1)
-    {
-        Serial.println("Convert rootCA.crt failed!");
-    }
-
-    // convert the deviceCert.crt and devicePrivateKey.pem to the format required by the modem
-    modem.sendAT("+CSSLCFG=\"CONVERT\",1,\"deviceCert.crt\",\"devicePrivateKey.pem\"");
-    if (modem.waitResponse() != 1)
-    {
-        Serial.println("Convert deviceCert.crt and devicePrivateKey.pem failed!");
-    }
-
-    /* enable SSL/TLS for a specific socket and set the root certificate authority (CA) and device certificate for secure communication.
-    <index> SSL status, range: 0-6
-            0 Not support SSL
-            1-6 Corresponding to AT+CSSLCFG command parameter <ctindex>
-            range 0-5
-    <ca list> CA_LIST file name, Max length is 20 bytes
-    <cert name> CERT_NAME file name, Max length is 20 bytes
-    <len_calist> Integer type. Maximum length of parameter <ca list>.
-    <len_certname> Integer type. Maximum length of parameter <cert name>. */
-    modem.sendAT("+SMSSL=1,\"rootCA.pem\",\"deviceCert.crt\"");
-    if (modem.waitResponse() != 1)
-    {
-        Serial.println("SSL with root CA and device certificate set up failed!");
+        Serial.println("... failed");
     }
     else
     {
-        Serial.println("SSL with root CA and device certificate set up successfully!");
+        // Make a HTTP GET request:
+        client.print(String("GET ") + Resource + " HTTP/1.1\r\n");
+        client.print(String("Host: ") + HTTP_Server + "\r\n");
+        client.print("Connection: close\r\n\r\n");
+
+        // Wait for data to arrive
+        uint32_t start = millis();
+        while (client.connected() && !client.available() &&
+               millis() - start < 30000L)
+        {
+            delay(100);
+        };
+
+        // Read data
+        start = millis();
+        char logo[640] = {
+            '\0',
+        };
+        int read_chars = 0;
+        while (client.connected() && millis() - start < 10000L)
+        {
+            while (client.available())
+            {
+                logo[read_chars] = client.read();
+                logo[read_chars + 1] = '\0';
+                read_chars++;
+                start = millis();
+            }
+        }
+        Serial.println(logo);
+        Serial.print("#####  RECEIVED:");
+        Serial.print(strlen(logo));
+        Serial.println("CHARACTERS");
+        client.stop();
     }
-    Serial.println("Step 9 done !");
+
+    Serial.println("Step 8 done !");
     /***********************************
-     * step 10 : Start to connect the MQTT server
+     * step 9 : Access HTTPS Server at demo4570913.mockable.io (this is a test server created by my account on mockable.io)
      ***********************************/
 
-    Serial.println("............................................................................Step 10");
-    Serial.println("start to connect the MQTT server ");
+    Serial.println("............................................................................Step 9");
+    Serial.println("start to connect the HTTPS server ");
 
-    Serial.println("Connecting to test.mosquitto.org ...");
-    while (true)
+    const int HTTPS_Port = 443;
+    const char *HTTPS_Server = "demo4570913.mockable.io";
+
+    TinyGsmClientSecure secureClient(modem, 0);
+    Serial.printf("Connecting securely to %s", HTTPS_Server);
+    if (!secureClient.connect(HTTPS_Server, HTTPS_Port))
     {
-        modem.sendAT("+SMCONN");
-        String response;
-        ret = modem.waitResponse(60000UL, response);
-
-        if (response.indexOf("ERROR") >= 0) // Check if the response contains "ERROR"
-        {
-            Serial.println("Connect failed");
-            break; // Stop attempting to connect
-        }
-        else if (response.indexOf("OK") >= 0) // Check if the response contains "OK"
-        {
-            Serial.println("Connect successfully");
-            break; // Exit the loop
-        }
-        else
-        {
-            Serial.println("No valid response, retrying connect ...");
-            delay(1000);
-        }
+        Serial.println("... failed");
     }
-    Serial.println("Step 10 done !");
+    else
+    {
+        // Make a HTTPS GET request:
+        secureClient.print(String("GET ") + Resource + " HTTP/1.1\r\n");
+        secureClient.print(String("Host: ") + HTTPS_Server + "\r\n");
+        secureClient.print("Connection: close\r\n\r\n");
+
+        // Wait for data to arrive
+        uint32_t startS = millis();
+        while (secureClient.connected() && !secureClient.available() &&
+               millis() - startS < 30000L)
+        {
+            delay(100);
+        };
+
+        // Read data
+        startS = millis();
+        char logoS[640] = {
+            '\0',
+        };
+        int read_charsS = 0;
+        while (secureClient.connected() && millis() - startS < 10000L)
+        {
+            while (secureClient.available())
+            {
+                logoS[read_charsS] = secureClient.read();
+                logoS[read_charsS + 1] = '\0';
+                read_charsS++;
+                startS = millis();
+            }
+        }
+        Serial.println(logoS);
+        Serial.print("#####  RECEIVED:");
+        Serial.print(strlen(logoS));
+        Serial.println("CHARACTERS");
+        secureClient.stop();
+    }
+
+    Serial.println("Step 9 done !");
 }
 
 void loop()
