@@ -119,7 +119,7 @@ void setup()
     modem.disableGPS();
     delay(500);
 
-
+#if 0
     /*
     ! GNSS Work Mode Set
      <gps mode> GPS work mode.
@@ -161,7 +161,7 @@ void setup()
     // Turn off GNSS.
     modem.sendAT("+SGNSCMD=0");
     modem.waitResponse();
-
+#endif
     delay(500);
 
     // GPS function needs to be enabled for the first use
