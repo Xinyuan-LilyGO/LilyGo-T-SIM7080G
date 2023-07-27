@@ -65,7 +65,7 @@ examples
 - USB Mode -> Hardware CDC and JIAG
 - Upload Mode -> UART0/Hardware CDC
 - Upload Speed -> 921600
-4. Insert USB into the PC and click Upload <If the upload fails, keep pressing the BOOT button, click RST, and then click Upload. When the upload is complete, click RST to exit the download mode>
+4. Insert USB into the PC and click Upload <If the upload fails, see Tips>
 
 ## 3️⃣ Tips:
 0. ⚠ SIM7080G cannot connect to cellular network and GPS positioning at the same time
@@ -83,6 +83,14 @@ examples
 12. ⚠ **Please understand the risks to be faced before changing the voltage of peripherals, otherwise do not try to change the voltage of cameras and other on-board devices, which may cause permanent damage**
 13. ⚠ **Please do not turn off the BLDO1 power supply, otherwise ESP32S3 and SIM7080G cannot communicate normally**
 14. Please check the [Operating Instructions](./docs/sim7080_update_firmware.md) for updating the built-in firmware of the modem. Generally, upgrading the firmware is not recommended
+15. The board uses USB as the JTAG upload port. When printing serial port information on USB_CDC_ON_BOOT configuration needs to be turned on. 
+If the port cannot be found when uploading the program or the USB has been used for other functions, the port does not appear. 
+Please enter the upload mode manually. 
+    1. Connect the board via the USB cable
+    1. Press and hold the BOOT button , While still pressing the BOOT button, press RST
+    1. Release the RST
+    1. Release the BOOT button
+    1. Upload sketch
 
 ## 4️⃣ Where to buy:
 
