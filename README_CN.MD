@@ -24,6 +24,7 @@ examples
 ├─MinimalModemSleepMode             # SIM7080G 睡眠示例
 ├─MinimalModemUpgrade               # SIM7080G 升级内置固件
 ├─MinimalPowersExample              # PMU使用示例
+├─MinimalPowersCurrentExample       # PMU 充电电流调试
 ├─MinimalSDCardExample              # SDCard 使用示例
 ├─ModemMqttPulishExample            # MQTT Pulish Example 
 ├─ModemMqttsExample                 # MQTTS Example 
