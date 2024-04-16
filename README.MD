@@ -7,6 +7,7 @@
 - SIM7080G supports **NB-IoT** and **Cat-M** in global frequency bands, but does **not support 2G/3G/4G**. Please confirm that the SIM card used supports **NB-IoT** or **Cat-M** before use.
 - The SIM card must be inserted first before starting the SIM7080. If the SIM card is inserted after the SIM7080 is turned on, the modem will not be able to detect the SIM card.
 
+
 ## 1️⃣ Examples preview
 
 ````
@@ -72,29 +73,30 @@ examples
 
 ## 3️⃣ Tips
 
-0. ⚠ SIM7080G cannot connect to cellular network and GPS positioning at the same time
-1. Board integrated PMU (Power management chip), with short circuit and overload protection. By default,`PWRKEY`needs to be pressed for 6 seconds to turn off the board power supply, and press`PWRKEY`for 128 milliseconds to turn on the power supply. If you need to modify the power off pressing time, please refer to`MinimalPowersExample`
-2. If the charging function is required, the`PMU` `TS Pin`detection function needs to be turned off. By default, there is no NTC sensor on the board, so the `TS Pin` detection needs to be disabled before the charging function can be used normally. If the`TS Pin`detection function is not turned off, the PMU charging indicator will flash after the battery is inserted, and charging will be disabled
-3. The board `VSYS` is the internal 5V boost output of the PMU, which can only be output but not input. Please do not connect an external power supply load greater than `500mA`
-4. The `DC5` power supply voltage can be adjusted, and the maximum output current should not exceed `1A`
+0. T-SIM7080 has two USB ports, the USB-C port is used to upload sketches and Serial output, and Micro-USB is used for SIM7080G firmware version upgrade
+1. ⚠ SIM7080G cannot connect to cellular network and GPS positioning at the same time
+2. Board integrated PMU (Power management chip), with short circuit and overload protection. By default,`PWRKEY`needs to be pressed for 6 seconds to turn off the board power supply, and press`PWRKEY`for 128 milliseconds to turn on the power supply. If you need to modify the power off pressing time, please refer to`MinimalPowersExample`
+3. If the charging function is required, the`PMU` `TS Pin`detection function needs to be turned off. By default, there is no NTC sensor on the board, so the `TS Pin` detection needs to be disabled before the charging function can be used normally. If the`TS Pin`detection function is not turned off, the PMU charging indicator will flash after the battery is inserted, and charging will be disabled
+4. The board `VSYS` is the internal 5V boost output of the PMU, which can only be output but not input. Please do not connect an external power supply load greater than `500mA`
+5. The `DC5` power supply voltage can be adjusted, and the maximum output current should not exceed `1A`
 5.`DC1` is the core power supply voltage, and the default output is `3.3V`. Please do not adjust the `DC1` voltage through software
-6. When the sketch cannot be uploaded, please press and hold the `BOOT` button on the board, and then insert the USB. At this time, you should be able to see the port in the device manager of the computer, and then click Upload Sketch again
-7. When the power supply channel of the `ESP32S3` is closed incorrectly, please insert USB, and then press and hold the `BOOT` button of the board, and then press and hold the `PWRKEY` button. At this time, the board enters the download mode, and the sketch can be uploaded normally
-8. If the power supply of the board cannot be turned on when the battery is connected, please check that the mechanical switch beside the USB is turned to`ON`, and then press the board `PWR` for `2 seconds`. At this time, the board should start to work
-9. The range of solar input voltage is `4.4~6V`. Please select an appropriate solar panel and set the maximum charging current as `500mA`
-10. If the camera is not connected, all IO ports are available. If the camera is used, the board has only `GPIO45` and `GPIO46` is idle
-11. `T-SIM7080G` uses `Octal SPI PSRAM`, so **GPIO35~GPIO37** is unavailable. Please do not use these IOs
-12. ⚠ **Please understand the risks to be faced before changing the voltage of peripherals, otherwise do not try to change the voltage of cameras and other on-board devices, which may cause permanent damage**
-13. ⚠ **Please do not turn off the BLDO1 power supply, otherwise ESP32S3 and SIM7080G cannot communicate normally**
-14. Please check the [Operating Instructions](./docs/sim7080_update_firmware.md) for updating the built-in firmware of the modem. Generally, upgrading the firmware is not recommended
-15. The board uses USB as the JTAG upload port. When printing serial port information on USB_CDC_ON_BOOT configuration needs to be turned on. 
+1. When the sketch cannot be uploaded, please press and hold the `BOOT` button on the board, and then insert the USB. At this time, you should be able to see the port in the device manager of the computer, and then click Upload Sketch again
+2. When the power supply channel of the `ESP32S3` is closed incorrectly, please insert USB, and then press and hold the `BOOT` button of the board, and then press and hold the `PWRKEY` button. At this time, the board enters the download mode, and the sketch can be uploaded normally
+3. If the power supply of the board cannot be turned on when the battery is connected, please check that the mechanical switch beside the USB is turned to`ON`, and then press the board `PWR` for `2 seconds`. At this time, the board should start to work
+4. The range of solar input voltage is `4.4~6V`. Please select an appropriate solar panel and set the maximum charging current as `500mA`
+5.  If the camera is not connected, all IO ports are available. If the camera is used, the board has only `GPIO45` and `GPIO46` is idle
+6.  `T-SIM7080G` uses `Octal SPI PSRAM`, so **GPIO35~GPIO37** is unavailable. Please do not use these IOs
+7.  ⚠ **Please understand the risks to be faced before changing the voltage of peripherals, otherwise do not try to change the voltage of cameras and other on-board devices, which may cause permanent damage**
+8.  ⚠ **Please do not turn off the BLDO1 power supply, otherwise ESP32S3 and SIM7080G cannot communicate normally**
+9.  Please check the [Operating Instructions](./docs/sim7080_update_firmware.md) for updating the built-in firmware of the modem. Generally, upgrading the firmware is not recommended
+10. The board uses USB as the JTAG upload port. When printing serial port information on USB_CDC_ON_BOOT configuration needs to be turned on. 
 If the port cannot be found when uploading the program or the USB has been used for other functions, the port does not appear. 
 Please enter the upload mode manually. 
     1. Connect the board via the USB cable
-    1. Press and hold the BOOT button , While still pressing the BOOT button, press RST
-    1. Release the RST
-    1. Release the BOOT button
-    1. Upload sketch
+    2. Press and hold the BOOT button , While still pressing the BOOT button, press RST
+    3. Release the RST
+    4. Release the BOOT button
+    5. Upload sketch
 
 ## 4️⃣ Where to buy:
 
