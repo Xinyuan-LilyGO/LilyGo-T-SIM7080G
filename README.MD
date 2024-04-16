@@ -2,7 +2,10 @@
 
 ## **English | [中文](README_CN.MD)**
 
+## News
 
+- SIM7080G supports **NB-IoT** and **Cat-M** in global frequency bands, but does **not support 2G/3G/4G**. Please confirm that the SIM card used supports **NB-IoT** or **Cat-M** before use.
+- The SIM card must be inserted first before starting the SIM7080. If the SIM card is inserted after the SIM7080 is turned on, the modem will not be able to detect the SIM card.
 
 ## 1️⃣ Examples preview
 
@@ -48,12 +51,11 @@ examples
 8. Click (→) to upload firmware
 9. Click (plug symbol) to monitor serial output
 
-
 ### ArduinoIDE
 
 1. Install [ArduinoIDE](https://www.arduino.cc/en/software)
 2. Copy all the folders in the `LilyGo-T-SIM7080G/lib` directory to `<C:\Users\UserName\Documents\Arduino\libraries>`. If there is no `libraries` directory, please create a new one. Please note that you are not copying the `lib` directory, but copying the folders in the lib directory
-3. Open ArduinoIDE -> Tools
+3. Open Arduino IDE -> Tools
 - Board -> ESP32S3 Dev Module
 - USB CDC On Boot -> Enable  ## Note that you need to change Enable to Disable when USB is not connected, so USB CDC will not prevent the board from starting
 - CPU Frequency -> 240MHz
@@ -63,12 +65,13 @@ examples
 - USB Firmware MSC On Boot -> Disable
 - PSRAM -> OPI PSRAM
 - Partition Scheme -> 16M Flash(3MB APP/9.9MB FATFS)
-- USB Mode -> Hardware CDC and JIAG
+- USB Mode -> Hardware CDC and JTAG
 - Upload Mode -> UART0/Hardware CDC
 - Upload Speed -> 921600
 4. Insert USB into the PC and click Upload <If the upload fails, see Tips>
 
-## 3️⃣ Tips:
+## 3️⃣ Tips
+
 0. ⚠ SIM7080G cannot connect to cellular network and GPS positioning at the same time
 1. Board integrated PMU (Power management chip), with short circuit and overload protection. By default,`PWRKEY`needs to be pressed for 6 seconds to turn off the board power supply, and press`PWRKEY`for 128 milliseconds to turn on the power supply. If you need to modify the power off pressing time, please refer to`MinimalPowersExample`
 2. If the charging function is required, the`PMU` `TS Pin`detection function needs to be turned off. By default, there is no NTC sensor on the board, so the `TS Pin` detection needs to be disabled before the charging function can be used normally. If the`TS Pin`detection function is not turned off, the PMU charging indicator will flash after the battery is inserted, and charging will be disabled
