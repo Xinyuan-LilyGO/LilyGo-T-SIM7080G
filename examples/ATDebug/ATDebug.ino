@@ -14,7 +14,7 @@
 
 // See all AT commands, if wanted
 #define DUMP_AT_COMMANDS
-
+#define TINY_GSM_MODEM_SIM7080
 #include <TinyGsmClient.h>
 
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
