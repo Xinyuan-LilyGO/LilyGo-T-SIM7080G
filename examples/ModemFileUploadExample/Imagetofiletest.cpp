@@ -12,8 +12,6 @@
 #define TINY_GSM_MODEM_SIM7080
 #include <TinyGsmClient.h>
 
-char buffer[1024] = {0};
-
 #ifdef DUMP_AT_COMMANDS  // if enabled it requires the streamDebugger lib
 #include <StreamDebugger.h>
 StreamDebugger debugger(SerialAT, Serial);
@@ -26,10 +24,18 @@ TinyGsm modem(SerialAT);
 #include "XPowersLib.h"
 XPowersPMU  PMU;
 
+bool firstChunk = true;
+
+#include <algorithm> // Include the <algorithm> header for the std::min function
+
+const size_t bufferSize = 10240; // 10KB buffer size
+uint8_t buffer[bufferSize];
+
 void sendFileToModem(File file, const char* filename) {
     modem.sendAT("+CFSTERM"); // Close FS in case it's still initialized
     if (modem.waitResponse() != 1) {
         Serial.println("Failed to terminate file system");
+        return;
     }
     
     modem.sendAT("+CFSINIT"); // Initialize FS
@@ -38,43 +44,46 @@ void sendFileToModem(File file, const char* filename) {
         return;
     }
 
-    // Prepare file upload command
-    size_t fileSize = file.size();
-    String command = "+CFSWFILE=0,\"" + String(filename) + "\",0," + String(fileSize) + ",10000"; 
-    Serial.println(command); // For reference
-    modem.sendAT(command.c_str()); // Send file upload command
-    if (modem.waitResponse(30000UL, "DOWNLOAD") != 1) { // Wait for modem confirmation
-        Serial.println("Modem did not respond with DOWNLOAD");
-        return;
+    // Get the total size of the file
+    size_t totalSize = file.size();
+    size_t alreadySent = 0;
+    bool firstChunk = true;
+
+    // Loop for sending chunks
+    while (totalSize > 0) {
+        // Determine the size of the next chunk to send
+        size_t chunkSize = std::min(totalSize, static_cast<size_t>(10000)); // Limit chunk size to 10,000 bytes
+
+        // Prepare the file upload command
+        String command = "+CFSWFILE=0,\"" + String(filename) + "\"," + String(firstChunk ? 0 : 1) + "," + String(chunkSize) + ",10000";
+        Serial.println(command); // For reference
+        modem.sendAT(command.c_str()); // Send file upload command
+        // if (modem.waitResponse(30000UL, "ERROR") == 1) { // Wait for modem confirmation
+        //     Serial.println("Modem did not respond with DOWNLOAD");
+        //     return;
+        // }
+
+        // Write the chunk of data to the modem
+        size_t bytesRead = file.read(buffer, std::min(chunkSize, bufferSize)); // Read chunkSize bytes from the file
+        if (bytesRead > 0) {
+            size_t bytesWritten = modem.stream.write(buffer, bytesRead); // Write the read data to the modem's stream
+            if (bytesWritten != bytesRead) {
+                Serial.println("Failed to write chunk to modem");
+                return;
+            }
+            alreadySent += bytesWritten;
+            totalSize -= bytesWritten;
+
+            Serial.printf("Sent %d bytes, %d bytes remaining\n", bytesWritten, totalSize);
+        } else {
+            Serial.println("Failed to read chunk from file");
+            return;
+        }
+
+        firstChunk = false; // Update the flag after the first chunk
     }
 
-    // Allocate buffer to read the entire file
-    uint8_t* buffer = (uint8_t*)malloc(fileSize);
-    if (buffer == NULL) {
-        Serial.println("Failed to allocate memory for buffer");
-        return;
-    }
-
-    // Read the entire file into buffer
-    size_t bytesRead = file.read(buffer, fileSize);
-    if (bytesRead != fileSize) {
-        Serial.println("Failed to read the expected number of bytes from the file");
-        free(buffer); // Free allocated memory
-        return;
-    }
-
-    // Send the entire buffer over UART
-    modem.stream.write(buffer, fileSize);
-
-    if (modem.waitResponse(30000UL) != 1) { // Wait for modem response
-        Serial.println("Write failed");
-        free(buffer); // Free allocated memory
-        return;
-    }
-
-    Serial.printf("Successfully written: %d bytes\n", fileSize);
-
-    free(buffer); // Free allocated memory
+    Serial.println("File upload completed");
 
     // Terminate file system after sending the file
     modem.sendAT("+CFSTERM");
@@ -82,14 +91,8 @@ void sendFileToModem(File file, const char* filename) {
         Serial.println("Failed to terminate file system after sending the file");
         return;
     }
-
-    // Check modem for increased file system size
-    modem.sendAT("+CFSGFRS?");
-    if (modem.waitResponse() != 1) {
-        Serial.println("Failed to get file system size");
-        return;
-    }
 }
+
 
 
 
@@ -174,9 +177,10 @@ void setup() {
         }
     }
 
-  File imageFile = SD_MMC.open("/image.png");
+  File imageFile = SD_MMC.open("/camimage.jpg");
   if (imageFile) {
-    sendFileToModem(imageFile, "image.png");
+    Serial.println("Image opened, sending!");
+    sendFileToModem(imageFile, "camimage.jpg");
     imageFile.close();
   } else {
     Serial.println("Failed to open image file!");
