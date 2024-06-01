@@ -42,26 +42,42 @@
 #define POWERS_SY6970_REG_08H                                   (0x08)
 #define POWERS_SY6970_REG_09H                                   (0x09)
 #define POWERS_SY6970_REG_0AH                                   (0x0A)
+// Read only STATUS REG
 #define POWERS_SY6970_REG_0BH                                   (0x0B)
+// Read only CHARGE IRQ REG
 #define POWERS_SY6970_REG_0CH                                   (0x0C)
+// Absolute VINDPM Threshold
 #define POWERS_SY6970_REG_0DH                                   (0x0D)
+// Read only BATTERY VOLTAGE
 #define POWERS_SY6970_REG_0EH                                   (0x0E)
+// Read only SYSTEM VOLTAGE
 #define POWERS_SY6970_REG_0FH                                   (0x0F)
+// Read only NTC PERCENTAGE
 #define POWERS_SY6970_REG_10H                                   (0x10)
+// Read only VBUS VOLTAGE
 #define POWERS_SY6970_REG_11H                                   (0x11)
+// Read only CHARGE CURRENT
 #define POWERS_SY6970_REG_12H                                   (0x12)
+// Read only VINDPM/IINDPM STATUS/CURR LIMIT SETTING 
 #define POWERS_SY6970_REG_13H                                   (0x13)
+// RESET REG
 #define POWERS_SY6970_REG_14H                                   (0x14)
 
 #define POWERS_SY6970_VBUS_MASK_VAL(val)                        (val & 0x7F)
 #define POWERS_SY6970_VBAT_MASK_VAL(val)                        (val & 0x7F)
 #define POWERS_SY6970_VSYS_MASK_VAL(val)                        (val & 0x7F)
+#define POWERS_SY6970_NTC_MASK_VAL(val)                         (val & 0x7F)
+
 #define POWERS_SY6970_VBUS_BASE_VAL                             (2600)
 #define POWERS_SY6970_VBAT_BASE_VAL                             (2304)
 #define POWERS_SY6970_VSYS_BASE_VAL                             (2304)
+#define POWERS_SY6970_NTC_BASE_VAL                              (21)
+
 #define POWERS_SY6970_VBUS_VOL_STEP                             (100)
 #define POWERS_SY6970_VBAT_VOL_STEP                             (20)
 #define POWERS_SY6970_VSYS_VOL_STEP                             (20)
+#define POWERS_SY6970_NTC_VOL_STEP                              (0.465)
+#define POWERS_SY6970_CHG_STEP_VAL                              (50)
 
 #define POWERS_SY6970_PRE_CHG_CUR_BASE                          (64)
 #define POWERS_SY6970_FAST_CHG_CUR_STEP                         (64)
@@ -78,10 +94,26 @@
 #define POWERS_FAST_CHG_VOL_MIN                                 (3840)
 #define POWERS_FAST_CHG_VOL_MAX                                 (4608)
 
-#define POWERS_SY6970_SYS_VOL_STEPS         (100)
-#define POWERS_SY6970_SYS_VOFF_VOL_MIN      (3000)
-#define POWERS_SY6970_SYS_VOFF_VOL_MAX      (3700)
+#define POWERS_SY6970_SYS_VOL_STEPS                             (100)
+#define POWERS_SY6970_SYS_VOFF_VOL_MIN                          (3000)
+#define POWERS_SY6970_SYS_VOFF_VOL_MAX                          (3700)
 
-#define POWERS_SY6970_IN_CURRENT_STEP                          (50)
+#define POWERS_SY6970_IN_CURRENT_STEP                           (50)
 #define POWERS_SY6970_IN_CURRENT_MIN                            (100)
 #define POWERS_SY6970_IN_CURRENT_MAX                            (3250)
+
+#define POWERS_SY6970_BOOTS_VOL_BASE                            (4550)
+#define POWERS_SY6970_BOOTS_VOL_STEP                            (64)
+#define POWERS_SY6970_BOOST_VOL_MIN                             (4550)
+#define POWERS_SY6970_BOOST_VOL_MAX                             (5510)
+
+#define POWERS_SY6970_IRQ_WTD_FAULT(x)                          (bool)(( x & 0xFF ) >> 7)
+#define POWERS_SY6970_IRQ_BOOST_FAULT(x)                        (bool)(( x & 0xFF ) >> 6)
+#define POWERS_SY6970_IRQ_CHG_FAULT(x)                          (bool)(( x & 0xFF ) >> 5)
+#define POWERS_SY6970_IRQ_BAT_FAULT(x)                          (bool)(( x & 0xFF ) >> 4)
+#define POWERS_SY6970_IRQ_NTC_FAULT(x)                          (bool)(( x & 0xFF ) & 0x03)
+
+#define POWERS_SY6970_VINDPM_VOL_BASE                           (4550)
+#define POWERS_SY6970_VINDPM_VOL_STEPS                          (100)
+#define POWERS_SY6970_VINDPM_VOL_MIN                            (3900)
+#define POWERS_SY6970_VINDPM_VOL_MAX                            (15300)
