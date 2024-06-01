@@ -1,3 +1,6 @@
+// Contribution from Bfreak : https://github.com/Bfreak
+// https://github.com/Xinyuan-LilyGO/LilyGo-T-SIM7080G/pull/71
+
 #include <Arduino.h>
 #include "utilities.h"  // Include the utilities header
 #include <vector>
