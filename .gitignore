@@ -1,7 +1,6 @@
 .pio
 .vscode
 build
-firmware
 __pycache__
 
 
