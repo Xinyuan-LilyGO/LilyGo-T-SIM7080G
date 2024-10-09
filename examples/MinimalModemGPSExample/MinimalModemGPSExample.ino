@@ -68,6 +68,14 @@ void setup()
             delay(5000);
         }
     }
+
+    // If it is a power cycle, turn off the modem power. Then restart it
+    if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_UNDEFINED ) {
+        PMU.disableDC3();
+        // Wait a minute
+        delay(200);
+    }
+
     //Set the working voltage of the modem, please do not modify the parameters
     PMU.setDC3Voltage(3000);    //SIM7080 Modem main power channel 2700~ 3400V
     PMU.enableDC3();

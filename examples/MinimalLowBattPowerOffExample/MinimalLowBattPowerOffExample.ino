@@ -47,6 +47,13 @@ void setup()
         }
     }
 
+    // If it is a power cycle, turn off the modem power. Then restart it
+    if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_UNDEFINED ) {
+        PMU.disableDC3();
+        // Wait a minute
+        delay(200);
+    }
+    
 
     // I2C sensor call example
     int sda = 13;  // You can also use other IO ports

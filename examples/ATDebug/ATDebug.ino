@@ -65,13 +65,19 @@ void setup()
     PMU.disableDLDO2();
 
     // ESP32S3 power supply cannot be turned off
-    // PMU.disableDC3();
+    // PMU.disableDC1();
+
+    // If it is a power cycle, turn off the modem power. Then restart it
+    if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_UNDEFINED ) {
+        PMU.disableDC3();
+        // Wait a minute
+        delay(200);
+    }
 
     //! Do not turn off BLDO1, which controls the 3.3V power supply for level conversion.
     //! If it is turned off, it will not be able to communicate with the modem normally
     PMU.setBLDO1Voltage(3300);    //Set the power supply for level conversion to 3300mV
     PMU.enableBLDO1();
-
 
     //Set the working voltage of the modem, please do not modify the parameters
     PMU.setDC3Voltage(3000);    //SIM7080 Modem main power channel 2700~ 3400V
@@ -80,10 +86,6 @@ void setup()
     //Modem GPS Power channel
     PMU.setBLDO2Voltage(3300);
     PMU.enableBLDO2();      //The antenna power must be turned on to use the GPS function
-
-    // TS Pin detection must be disable, otherwise it cannot be charged
-    PMU.disableTSPinMeasure();
-
 
     /*********************************
      * step 2 : start modem
