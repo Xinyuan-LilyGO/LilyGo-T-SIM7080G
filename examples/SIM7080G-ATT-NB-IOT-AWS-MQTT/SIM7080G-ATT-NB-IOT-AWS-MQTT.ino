@@ -274,7 +274,7 @@ void setup()
     Serial.println("............................................................................Step 5");
     Serial.println("Start to perform network registration, configure APN and ping 8.8.8.8");
 
-    RegStatus s;
+    SIM70xxRegStatus s;
     do
     {
         s = modem.getRegistrationStatus();

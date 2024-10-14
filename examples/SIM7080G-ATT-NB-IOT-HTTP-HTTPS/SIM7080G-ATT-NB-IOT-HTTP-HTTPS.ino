@@ -192,7 +192,7 @@ void setup()
     modem.sendAT("+CGDCONT=1,\"IP\",\"m2mNB16.com.attz\"");
     modem.waitResponse();
 
-    RegStatus s;
+    SIM70xxRegStatus s;
     do
     {
         s = modem.getRegistrationStatus();

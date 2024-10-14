@@ -81,7 +81,7 @@ void setuoModem()
         return ;
     }
 
-    RegStatus s;
+    SIM70xxRegStatus s;
     do {
         s = modem.getRegistrationStatus();
         int16_t sq = modem.getSignalQuality();

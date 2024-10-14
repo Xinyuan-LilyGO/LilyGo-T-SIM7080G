@@ -286,7 +286,7 @@ void setup()
     /*********************************
     * step 5 : Wait for the network registration to succeed
     ***********************************/
-    RegStatus s;
+    SIM70xxRegStatus s;
     do {
         s = modem.getRegistrationStatus();
         if (s != REG_OK_HOME && s != REG_OK_ROAMING) {
