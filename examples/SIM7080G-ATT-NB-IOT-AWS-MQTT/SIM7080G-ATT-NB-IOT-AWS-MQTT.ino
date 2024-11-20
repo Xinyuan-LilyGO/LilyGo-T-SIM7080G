@@ -455,6 +455,11 @@ void setup()
     writeCaFiles(3, "deviceCert.crt", Client_CRT, strlen(Client_CRT));       // Client_CRT is retrieved from AWS_Client_CRT.h, please download the device certificate from AWS IoT Core when you create the thing
     writeCaFiles(3, "devicePrivateKey.pem", Client_PSK, strlen(Client_PSK)); // Client_PSK is retrieved from AWS_Client_PSK.h, please download the device private key from AWS IoT Core when you create the thing
 
+    // enable server sni
+    snprintf(buffer, 1024, "+CSSLCFG=\"sni\",0,\"%s\"", MQTT_Server_URL);
+    modem.sendAT(buffer);
+    modem.waitResponse();
+
     Serial.println("Step 8 done !");
     /***********************************
      * step 9 : Configure TLS/SSL before connecting to AWS IOT Core
