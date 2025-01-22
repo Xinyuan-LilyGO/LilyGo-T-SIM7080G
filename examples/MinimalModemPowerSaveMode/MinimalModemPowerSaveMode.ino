@@ -287,7 +287,6 @@ void loop()
 
 void getPsmTimer()
 {
-
     // AT+CPSMS=[<mode>[,<Requested_Periodic-RAU>[,<Requested_GPRS-READY-timer>[,<Requested_Periodic-TAU>[,<Requested_Active-Time>]]]]]
     // <mode>
     //      0 - Disable the use of PSM  1 - Enable the use of PSM
@@ -299,21 +298,20 @@ void getPsmTimer()
     //      ! T3412
     //      String type; one byte in an 8 bit format. Requested extended periodic TAU value (T3412) to be allocated to the UE in E-UTRAN.
     //      The requested extended periodic TAU value is coded as one byte (octet 3) of the GPRS Timer 3 information element coded as bit format (e.g. "01000111" equals 70 hours).
-    //      For the coding and the value range, see the GPRS Timer 3 IE in 3GPP TS 24.008 [8] Table 10.5.163a/3GPP TS 24.008.
-    //      See also 3GPP TS 23.682 [149] and 3GPP TS 23.401 [82]. The default value, if available, is manufacturer specific.
+    //      For the coding and the value range, see SIM7070_SIM7080_SIM7090 Series_Low Power Mode_Application Note_V1.02
+
     //              GPRS Timer 3 value (octet 3)
     //              Bits 5 to 1 represent the binary coded timer value.
     //              Bits 6 to 8 defines the timer value unit for the GPRS timer as follows:
     //              Bits
     //              8 7 6
-    //              0 0 0 value is incremented in multiples of 10 minutes
-    //              0 0 1 value is incremented in multiples of 1 hour
-    //              0 1 0 value is incremented in multiples of 10 hours
-    //              0 1 1 value is incremented in multiples of 2 seconds
-    //              1 0 0 value is incremented in multiples of 30 seconds
-    //              1 0 1 value is incremented in multiples of 1 minute
-    //              1 1 1 value indicates that the timer is deactivated.
-    //              Other values shall be interpreted as multiples of 1 hour in this version of the protocol.
+    //              0 0 0 value is incremented in multiples of 10 minutes (Min 2400sec Max 18600sec)
+    //              0 0 1 value is incremented in multiples of 1 hour (Min 21600sec Max 111600sec)
+    //              0 1 0 value is incremented in multiples of 10 hours (Min 144000sec Max 1116000sec)
+    //              0 1 1 value is incremented in multiples of 2 seconds (Min 0sec Max 62sec)
+    //              1 0 0 value is incremented in multiples of 30 seconds (Min 90sec Max 930sec)
+    //              1 0 1 value is incremented in multiples of 1 minute (Min 960sec Max 1860sec)
+    //              1 1 0 value is incremented in multiples of 320 hours (Min 1152000sec Max 35712000sec)
     //
     // <Requested_Active-Time>
     //      ! T3324
@@ -321,131 +319,44 @@ void getPsmTimer()
     //      Requested Active Time valuen (T3324) to be allocated to the UE.
     //      The requested Active Time value is coded as one byte (octet 3) of the GPRS Timer 2 information element coded as bit format (e.g. "00100100" equals 4 minutes).
     //      For the coding and the value range,
-    //      see the GPRS Timer 2 IE in 3GPP TS 24.008 [8] Table 10.5.163/3GPP TS 24.008.
-    //      See also 3GPP TS 23.682 [149], 3GPP TS 23.060 [47] and 3GPP TS 23.401 [82]. The default value, if available, is manufacturer specific.
+    //      see SIM7070_SIM7080_SIM7090 Series_Low Power Mode_Application Note_V1.02
+
     //              GPRS Timer 3 value (octet 3)
     //              Bits 5 to 1 represent the binary coded timer value.
     //              Bits 6 to 8 defines the timer value unit for the GPRS timer as follows:
     //              Bits
     //              8 7 6
-    //              0 0 0 value is incremented in multiples of 10 minutes
-    //              0 0 1 value is incremented in multiples of 1 hour
-    //              0 1 0 value is incremented in multiples of 10 hours
-    //              0 1 1 value is incremented in multiples of 2 seconds
-    //              1 0 0 value is incremented in multiples of 30 seconds
-    //              1 0 1 value is incremented in multiples of 1 minute
-    //              1 1 1 value indicates that the timer is deactivated.
-    //              Other values shall be interpreted as multiples of 1 hour in this version of the protocol.
+    //              0 0 0 value is incremented in multiples of 2 seconds (Min 0sec Max 62sec)
+    //              0 0 1 value is incremented in multiples of 1 minute (Min 120sec Max 1860sec)
+    //              0 1 0 value is incremented in multiples of 6 minutes (Min 2160sec Max 11160sec)
     //
-
     String result;
 
-    modem.sendAT("+CEREG?");
+    modem.sendAT("+CPSMRDP");
 
-    if (modem.waitResponse(5000, "+CEREG: ") != 1) {
+    if (modem.waitResponse(5000, "+CPSMRDP: ") != 1) {
+        Serial.println("Failed to get CPSMRDP response");
         return;
     }
 
     result = modem.stream.readStringUntil('\r');
-    for (int i = 0; i < 7; ++i) {
-        int index =  result.indexOf(",");
-        if (index >= 0) {
-            result = result.substring(index + 1);
-        }
-    }
+    Serial.println("Raw response: " + result);
 
-    result.replace("\"", "");
-    String T3412, T3324;
-    T3412 = result.substring(0, result.indexOf(",") );
-    T3324 = result.substring(result.indexOf(",") + 1);
-    Serial.print("T3412:");
-    Serial.println(T3412);
-    Serial.print("T3324:");
-    Serial.println(T3324);
+    // Parse and display the results
+    int mode, requestedActiveTime, requestedPeriodicTAU, networkActiveTime, networkT3412ExtValue, networkT3412Value;
+    sscanf(result.c_str(), "%d,%d,%d,%d,%d,%d", &mode, &requestedActiveTime, &requestedPeriodicTAU, &networkActiveTime, &networkT3412ExtValue, &networkT3412Value);
 
-
-
-    int T3412_int = 0, T3324_int = 0;
-    for (int i = 0; i < 8; ++i) {
-        if (T3412[i] == '1') {
-            T3412_int |= (1 << (7 - i));
-        }
-    }
-    Serial.print("T3412_int:");
-    Serial.println(T3412_int, BIN);
-
-    for (int i = 0; i < 8; ++i) {
-        if (T3324[i] == '1') {
-            T3324_int |= (1 << (7 - i));
-        }
-    }
-    Serial.print("T3324_int:");
-    Serial.println(T3324_int, BIN);
-
-    int T3324_flag = (T3324_int >> 5);
-    int T3324_timer = (T3324_int & 0x1F);
-
-    Serial.println("Active-Time:");
-    switch (T3324_flag) {
-    case 0:
-        Serial.println(" 0 0 0 value is incremented in multiples of 10 minutes");
-        Serial.printf(" T3324_timer: %u minutes\n", T3324_timer * 10);
-        break;
-    case 1:
-        Serial.println(" 0 0 1 value is incremented in multiples of 1 hour");
-        Serial.printf(" T3324_timer: %u hours\n", T3324_timer * 1);
-        break;
-    case 2:
-        Serial.println(" 0 1 0 value is incremented in multiples of 10 hours");
-        Serial.printf(" T3324_timer: %u hours\n", T3324_timer * 10);
-        break;
-    case 3:
-        Serial.println(" 0 1 1 value is incremented in multiples of 2 seconds");
-        Serial.printf(" T3324_timer: %u seconds\n", T3324_timer * 2);
-        break;
-    case 4:
-        Serial.println(" 1 0 0 value is incremented in multiples of 30 seconds");
-        Serial.printf(" T3324_timer: %u seconds\n", T3324_timer * 30);
-        break;
-    case 5:
-        Serial.println(" 1 0 1 value is incremented in multiples of 1 minute");
-        Serial.printf(" T3324_timer: %u minutes\n", T3324_timer * 1);
-        break;
-    default:
-        break;
-    }
-
-    int T3412_flag = (T3412_int >> 5);
-    int T3412_timer = (T3412_int & 0x1F);
-    Serial.println("Periodic-TAU:");
-    switch (T3412_flag) {
-    case 0:
-        Serial.println(" 0 0 0 value is incremented in multiples of 10 minutes");
-        Serial.printf(" T3412_timer: %u minutes\n", T3412_timer * 10);
-        break;
-    case 1:
-        Serial.println(" 0 0 1 value is incremented in multiples of 1 hour");
-        Serial.printf(" T3412_timer: %u hours\n", T3412_timer * 1);
-        break;
-    case 2:
-        Serial.println(" 0 1 0 value is incremented in multiples of 10 hours");
-        Serial.printf(" T3412_timer: %u hours\n", T3412_timer * 10);
-        break;
-    case 3:
-        Serial.println(" 0 1 1 value is incremented in multiples of 2 seconds");
-        Serial.printf(" T3412_timer: %u seconds\n", T3412_timer * 2);
-        break;
-    case 4:
-        Serial.println(" 1 0 0 value is incremented in multiples of 30 seconds");
-        Serial.printf(" T3412_timer: %u seconds\n", T3412_timer * 30);
-
-        break;
-    case 5:
-        Serial.println(" 1 0 1 value is incremented in multiples of 1 minute");
-        Serial.printf(" T3412_timer: %u minutes\n", T3412_timer * 1);
-        break;
-    default:
-        break;
-    }
-
+    Serial.println("Parsed response:");
+    Serial.print("Mode: ");
+    Serial.println(mode == 1 ? "enable" : "disable");
+    Serial.print("Requested Active Time: ");
+    Serial.println(requestedActiveTime);
+    Serial.print("Requested Periodic TAU: ");
+    Serial.println(requestedPeriodicTAU);
+    Serial.print("Network Active Time: ");
+    Serial.println(networkActiveTime);
+    Serial.print("Network T3412 EXT Value: ");
+    Serial.println(networkT3412ExtValue);
+    Serial.print("Network T3412 Value: ");
+    Serial.println(networkT3412Value);
 }
