@@ -10,8 +10,8 @@
 #pragma once
 
 
-void setuoModem();
-bool getLoaction();
+void setupModem();
+bool getLocation();
 
 
 

@@ -40,10 +40,10 @@ TinyGsm        modem(debugger);
 TinyGsm        modem(Serial1);
 #endif
 
-bool getLoaction();
-void loactionTask(void *);
+bool getLocation();
+void locationTask(void *);
 
-void setuoModem()
+void setupModem()
 {
     Serial.println("Initializing modem...");
 
@@ -111,14 +111,14 @@ void setuoModem()
         Serial.println("Enable gps failed!");
     }
 
-    xTaskCreate(loactionTask, "gps", 4096, NULL, 10, NULL);
+    xTaskCreate(locationTask, "gps", 4096, NULL, 10, NULL);
 }
 
-void loactionTask(void *)
+void locationTask(void *)
 {
-    Serial.println("Get loaction");
+    Serial.println("Get location");
     while (1) {
-        if (getLoaction()) {
+        if (getLocation()) {
             Serial.println();
             break;
         }
@@ -129,7 +129,7 @@ void loactionTask(void *)
 }
 
 
-bool getLoaction()
+bool getLocation()
 {
     float lat      = 0;
     float lon      = 0;
@@ -165,7 +165,7 @@ bool getLoaction()
 }
 
 #else
-void setuoModem()
+void setupModem()
 {
 
 }

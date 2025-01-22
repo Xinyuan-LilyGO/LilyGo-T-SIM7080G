@@ -58,7 +58,7 @@ void setup()
 
     Serial.println("=========================================");
 
-    setuoModem();
+    setupModem();
 
     Serial.println("=========================================");
 
