@@ -80,8 +80,6 @@ enum {
 
 
 //!! Set the APN manually. Some operators need to set APN first when registering the network.
-//!! Set the APN manually. Some operators need to set APN first when registering the network.
-//!! Set the APN manually. Some operators need to set APN first when registering the network.
 // Using 7080G with Hologram.io , https://github.com/Xinyuan-LilyGO/LilyGo-T-SIM7080G/issues/19
 // const char *apn = "hologram";
 
@@ -268,7 +266,7 @@ void setup()
 
     Serial.printf("getNetworkMode:%u getPreferredMode:%u\n", mode, pre);
 
-    //Set the APN manually. Some operators need to set APN first when registering the network.
+    //!! Set the APN manually. Some operators need to set APN first when registering the network.
     modem.sendAT("+CGDCONT=1,\"IP\",\"", apn, "\"");
     if (modem.waitResponse() != 1) {
         Serial.println("Set operators apn Failed!");
