@@ -1,5 +1,5 @@
 
-[Platform link](www.bigiot.net)
+[Platform link](https://www.bigiot.net)
 [Relevant communication protocol of Shell IOT users](https://www.bigiot.net/help/33.html)
 
 ## Current consumption
