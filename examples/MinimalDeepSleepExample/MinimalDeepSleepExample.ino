@@ -20,7 +20,6 @@ XPowersPMU  PMU;
 
 #define TINY_GSM_MODEM_SIM7080
 #include <TinyGsmClient.h>
-#include "utilities.h"
 
 // Set to wake up every 5 minutes to send positioning coordinates to the platform
 #define uS_TO_S_FACTOR 1000000ULL                       /* Conversion factor for micro seconds to seconds */
