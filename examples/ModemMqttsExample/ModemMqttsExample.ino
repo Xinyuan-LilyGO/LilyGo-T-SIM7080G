@@ -34,14 +34,14 @@ TinyGsm modem(SerialAT);
 
 const char *register_info[] = {
     "Not registered, MT is not currently searching an operator to register "
-    "to.The GPRS service is disabled, the UE is allowed to attach for GPRS if "
+    "to. The GPRS service is disabled, the UE is allowed to attach for GPRS if "
     "requested by the user.",
     "Registered, home network.",
     "Not registered, but MT is currently trying to attach or searching an "
     "operator to register to. The GPRS service is enabled, but an allowable "
     "PLMN is currently not available. The UE will start a GPRS attach as soon "
     "as an allowable PLMN is available.",
-    "Registration denied, The GPRS service is disabled, the UE is not allowed "
+    "Registration denied, the GPRS service is disabled, the UE is not allowed "
     "to attach for GPRS if it is requested by the user.",
     "Unknown.",
     "Registered, roaming.",
