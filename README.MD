@@ -29,7 +29,7 @@ examples
 ├─MinimalPowersExample          # Example of PMU
 ├─MinimalPowersCurrentExample   # Example of PMU charge current debug
 ├─MinimalSDCardExample          # Example of using SDCard
-├─ModemMqttPulishExample        # MQTT Pulish Example            
+├─ModemMqttPublishExample       # MQTT Publish Example            
 ├─ModemMqttsExample             # MQTTS Example    
 ├─ModemMqttSubscribeExample     # MQTT Subscribe Example     
 ├─SIM7080G-ATT-NB-IOT-AWS-MQTT  # MQTTS AWS By @bootcampiot
