@@ -20,7 +20,6 @@ XPowersPMU  PMU;
 
 #define TINY_GSM_MODEM_SIM7080
 #include <TinyGsmClient.h>
-#include "utilities.h"
 
 
 #ifdef DUMP_AT_COMMANDS
