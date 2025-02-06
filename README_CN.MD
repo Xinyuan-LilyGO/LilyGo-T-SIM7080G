@@ -12,26 +12,32 @@
 
 examples 
 ├─AllFunction                       # 全功能测试示例
+├─ATDebug                           # AT命令示例
+├─BIGIOT_Gnss_Upload                # 上传定位坐标到BIGIOT 平台，定时唤醒消耗电流约1.2mA
 ├─BLE5_extended_scan                # 官方BLE5.0示例
 ├─BLE5_multi_advertising            # 官方BLE5.0示例
 ├─BLE5_periodic_advertising         # 官方BLE5.0示例    
 ├─BLE5_periodic_sync                # 官方BLE5.0示例
-├─BIGIOT_Gnss_Upload                # 上传定位坐标到BIGIOT 平台，定时唤醒消耗电流约1.2mA
 ├─MinimalCameraExample              # 摄像头使用示例
+├─MinimalDeepSleepExample           # DeepSleep 示例
+├─MinimalLowBattPowerExample        # 低电量示例
 ├─MinimalModemGPSExample            # SIM7080G GPS 示例
 ├─MinimalModemNBIOTExample          # SIM7080G NBIOT 示例
 ├─MinimalModemPowerSaveMode         # SIM7080G 电源保持示例
 ├─MinimalModemSleepMode             # SIM7080G 睡眠示例
 ├─MinimalModemUpgrade               # SIM7080G 升级内置固件
-├─MinimalPowersExample              # PMU使用示例
 ├─MinimalPowersCurrentExample       # PMU 充电电流调试
+├─MinimalPowersExample              # PMU使用示例
 ├─MinimalSDCardExample              # SDCard 使用示例
+├─ModemFileUploadExample            # File Upload Example            
 ├─ModemMqttPublishExample           # MQTT Publish Example 
+├─ModemMqttsAuthExample             # MQTTS Authentication Example    
 ├─ModemMqttsExample                 # MQTTS Example 
 ├─ModemMqttSubscribeExample         # MQTT Subscribe Example 
 ├─SIM7080G-ATT-NB-IOT-AWS-MQTT      # MQTTS AWS By @bootcampiot
 ├─SIM7080G-ATT-NB-IOT-HTTP-HTTPS    # HTTP/HTTPS  By @bootcampiot
 └─SIM7080G-ATT-NB-IOT-SSL-Mosquitto # MQTTS Mosquitto By @bootcampiot
+
 ```
 
 

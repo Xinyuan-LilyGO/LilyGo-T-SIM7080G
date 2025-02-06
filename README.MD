@@ -10,33 +10,37 @@
 
 ## 1️⃣ Examples preview
 
-````
+```
 
 examples 
-├─AllFunction                   # Full function test example
-├─BLE5_extended_scan            # Official BLE5 Example
-├─BLE5_multi_advertising        # Official BLE5 Example
-├─BLE5_periodic_advertising     # Official BLE5 Example    
-├─BLE5_periodic_sync            # Official BLE5 Example
-├─BIGIOT_Gnss_Upload            # Upload positioning coordinates to BIGIOT IOT,Timed wake-up consumes about 1.2mA
-├─MinimalCameraExample          # Example of camera use
-├─MinimalModemGPSExample        # SIM7080G GPS example
-├─MinimalModemNBIOTExample      # SIM7080G NBIOT example
-├─MinimalModemPowerSaveMode     # SIM7080G power maintenance example
-├─MinimalModemSleepMode         # SIM7080G sleep example
-├─MinimalDeepSleepExample       # DeepSleep example
-├─MinimalModemUpgrade           # Upgrade SIM7080 built-in firmware
-├─MinimalPowersExample          # Example of PMU
-├─MinimalPowersCurrentExample   # Example of PMU charge current debug
-├─MinimalSDCardExample          # Example of using SDCard
-├─ModemMqttPublishExample       # MQTT Publish Example            
-├─ModemMqttsExample             # MQTTS Example    
-├─ModemMqttSubscribeExample     # MQTT Subscribe Example     
-├─SIM7080G-ATT-NB-IOT-AWS-MQTT  # MQTTS AWS By @bootcampiot
-├─SIM7080G-ATT-NB-IOT-HTTP-HTTPS # HTTP/HTTPS  By @bootcampiot
+├─AllFunction                       # Full function test example
+├─ATDebug                           # AT Commands Example
+├─BIGIOT_Gnss_Upload                # Upload positioning coordinates to BIGIOT IOT,Timed wake-up consumes about 1.2mA
+├─BLE5_extended_scan                # Official BLE5 Example
+├─BLE5_multi_advertising            # Official BLE5 Example
+├─BLE5_periodic_advertising         # Official BLE5 Example    
+├─BLE5_periodic_sync                # Official BLE5 Example
+├─MinimalCameraExample              # Example of camera use
+├─MinimalDeepSleepExample           # DeepSleep example
+├─MinimalLowBattPowerExample        # Low Battery example
+├─MinimalModemGPSExample            # SIM7080G GPS example
+├─MinimalModemNBIOTExample          # SIM7080G NBIOT example
+├─MinimalModemPowerSaveMode         # SIM7080G power maintenance example
+├─MinimalModemSleepMode             # SIM7080G sleep example
+├─MinimalModemUpgrade               # Upgrade SIM7080 built-in firmware
+├─MinimalPowersCurrentExample       # Example of PMU charge current debug
+├─MinimalPowersExample              # Example of PMU
+├─MinimalSDCardExample              # Example of using SDCard
+├─ModemFileUploadExample            # File Upload Example            
+├─ModemMqttPublishExample           # MQTT Publish Example            
+├─ModemMqttsAuthExample             # MQTTS Authentication Example    
+├─ModemMqttsExample                 # MQTTS Example    
+├─ModemMqttSubscribeExample         # MQTT Subscribe Example     
+├─SIM7080G-ATT-NB-IOT-AWS-MQTT      # MQTTS AWS By @bootcampiot
+├─SIM7080G-ATT-NB-IOT-HTTP-HTTPS    # HTTP/HTTPS  By @bootcampiot
 └─SIM7080G-ATT-NB-IOT-SSL-Mosquitto # MQTTS Mosquitto By @bootcampiot
 
-````
+```
 
 
 ## 2️⃣ Quick Start
