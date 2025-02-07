@@ -191,7 +191,7 @@ void loop()
         Serial.print("speed:"); Serial.print(speed2); Serial.print("\t");
         Serial.print("altitude:"); Serial.print(alt2); Serial.println();
         Serial.print("year:"); Serial.print(year2);
-        Serial.print(" montoh:"); Serial.print(month2);
+        Serial.print(" month:"); Serial.print(month2);
         Serial.print(" day:"); Serial.print(day2);
         Serial.print(" hour:"); Serial.print(hour2);
         Serial.print(" minutes:"); Serial.print(min2);
