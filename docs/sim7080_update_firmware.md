@@ -1,7 +1,7 @@
 
 ## Quick Step
 
-1. Update the built-in firmware of ESP32S3 to<MinimalModemUpgrade>to ensure that the program is only responsible for enabling SIM7080G
+1. Update the built-in firmware of ESP32S3 using [MinimalModemUpgrade](../examples/MinimalModemUpgrade/MinimalModemUpgrade.ino) to ensure that the program is only responsible for enabling SIM7080G
 2. Connect the two USB ports of the board, USB-C and Micro-USB, and operate according to the following image
 
 3. Open [SIM7080 Driver](https://github.com/Xinyuan-LilyGO/LilyGo-T-PCIE/tree/master/update_simxxxx_firmware/USB_driver/SIMCOM_Windows_USB_Drivers_V1.0.2.exe)
