@@ -148,7 +148,7 @@ void setup()
 
 
     /*********************************
-     * step 4 : Set PMU low battery params
+     * step 5 : Set PMU low battery params
     ***********************************/
 
     // Get the default low pressure warning percentage setting

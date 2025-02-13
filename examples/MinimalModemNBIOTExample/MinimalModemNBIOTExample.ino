@@ -294,7 +294,7 @@ void setup()
     }
 
     /*********************************
-    * step 6 : Send HTTPS request
+    * step 7 : Send HTTPS request
     ***********************************/
     TinyGsmClientSecure secureClient(modem, 1);
     const int           securePort = 443;
