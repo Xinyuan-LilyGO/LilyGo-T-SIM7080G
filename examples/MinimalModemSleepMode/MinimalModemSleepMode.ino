@@ -241,7 +241,7 @@ void setup()
     }
 
     /*********************************
-    * step 6 : Wakeup Modem
+    * step 7 : Wakeup Modem
     ***********************************/
     Serial.print("Wakeup Modem .");
     //Pulling down DTR pin will wake module up from sleep mode.

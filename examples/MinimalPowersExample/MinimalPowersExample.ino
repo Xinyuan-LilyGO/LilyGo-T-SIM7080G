@@ -134,7 +134,7 @@ void setup()
     PMU.setChargeTargetVoltage(XPOWERS_AXP2101_CHG_VOL_4V1);
 
     /*********************************
-     * step 4 : Set PMU pwrkey params
+     * step 5 : Set PMU pwrkey params
     ***********************************/
     // Set the time of pressing the button to turn off
     PMU.setPowerKeyPressOffTime(XPOWERS_POWEROFF_4S);
