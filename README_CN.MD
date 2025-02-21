@@ -75,6 +75,12 @@ examples
    - Upload Mode -> UART0/Hardware CDC
    - Upload Speed -> 921600
 4. 插入USB到PC,点击上传<如果无法顺利上传,请保持按压BOOT按键,然后单击RST,然后再点击上传,上传完成时需要点击RST退出下载模式>
+### Use reference
+
+|   Product   |                             Youtube  link                             |                  explanation                    | Status | 
+| :---------: | :-------------------------------------------------------------------: |:-----------------------------------------------:| :----: |
+| T -7080G | [Youtube link](https://www.youtube.com/watch?v=lGctqLDGHz4) |    How to update the firmware of SIM7080G series products     |   ✅    |
+| LilyGo device | [Youtube link](https://www.youtube.com/watch?v=f3BybP3L7ls) |    How to enter boot mode to download the firmware     |   ✅    |
 
 
 ## 3️⃣ 提示:
