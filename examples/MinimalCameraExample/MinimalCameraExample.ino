@@ -31,7 +31,7 @@ void setup()
 
     Serial.begin(115200);
 
-    //Start while waiting for Serial monitoring
+    // Start while waiting for Serial monitoring
     while (!Serial);
 
     delay(3000);
@@ -48,8 +48,8 @@ void setup()
             delay(5000);
         }
     }
-    //Set the working voltage of the camera, please do not modify the parameters
-    PMU.setALDO1Voltage(1800);  // CAM DVDD  1500~1800
+    // Set the working voltage of the camera, please do not modify the parameters
+    PMU.setALDO1Voltage(1800);  // CAM DVDD 1500~1800
     PMU.enableALDO1();
     PMU.setALDO2Voltage(2800);  // CAM DVDD 2500~2800
     PMU.enableALDO2();
@@ -119,7 +119,7 @@ void setup()
     config.xclk_freq_hz = 20000000;
     config.frame_size = FRAMESIZE_UXGA;
     config.pixel_format = PIXFORMAT_JPEG; // for streaming
-    //config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
+    // config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
     config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
     config.fb_location = CAMERA_FB_IN_PSRAM;
     config.jpeg_quality = 12;

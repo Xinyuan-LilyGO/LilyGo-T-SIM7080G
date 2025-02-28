@@ -76,16 +76,16 @@ void setup()
 
     //! Do not turn off BLDO1, which controls the 3.3V power supply for level conversion.
     //! If it is turned off, it will not be able to communicate with the modem normally
-    PMU.setBLDO1Voltage(3300);    //Set the power supply for level conversion to 3300mV
+    PMU.setBLDO1Voltage(3300);    // Set the power supply for level conversion to 3300mV
     PMU.enableBLDO1();
 
-    //Set the working voltage of the modem, please do not modify the parameters
-    PMU.setDC3Voltage(3000);    //SIM7080 Modem main power channel 2700~ 3400V
+    // Set the working voltage of the modem, please do not modify the parameters
+    PMU.setDC3Voltage(3000);    // SIM7080 Modem main power channel 2700~ 3400V
     PMU.enableDC3();
 
-    //Modem GPS Power channel
+    // Modem GPS Power channel
     PMU.setBLDO2Voltage(3300);
-    PMU.enableBLDO2();      //The antenna power must be turned on to use the GPS function
+    PMU.enableBLDO2();      // The antenna power must be turned on to use the GPS function
 
     /*********************************
      * step 2 : start modem

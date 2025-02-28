@@ -42,7 +42,7 @@ void setup()
 
     Serial.begin(115200);
 
-    //Start while waiting for Serial monitoring
+    // Start while waiting for Serial monitoring
     while (!Serial);
 
     delay(3000);
@@ -62,13 +62,13 @@ void setup()
         }
     }
 
-    //Set the working voltage of the modem, please do not modify the parameters
-    PMU.setDC3Voltage(3000);    //SIM7080 Modem main power channel 2700~ 3400V
+    // Set the working voltage of the modem, please do not modify the parameters
+    PMU.setDC3Voltage(3000);    // SIM7080 Modem main power channel 2700~ 3400V
     PMU.enableDC3();
 
-    //Modem GPS Power channel
+    // Modem GPS Power channel
     PMU.setBLDO2Voltage(3300);
-    PMU.enableBLDO2();      //The antenna power must be turned on to use the GPS function
+    PMU.enableBLDO2();      // The antenna power must be turned on to use the GPS function
 
     // TS Pin detection must be disable, otherwise it cannot be charged
     PMU.disableTSPinMeasure();
@@ -154,8 +154,8 @@ void setup()
     Left the line commented as an example of how to configure peripherals.
     The line below turns off all RTC peripherals in deep sleep.
     */
-    //esp_deep_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_OFF);
-    //Serial.println("Configured all RTC Peripherals to be powered down in sleep");
+    // esp_deep_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_OFF);
+    // Serial.println("Configured all RTC Peripherals to be powered down in sleep");
 
     /*
     Now that we have setup a wake cause and if needed setup the

@@ -62,7 +62,7 @@ void setup()
 
     Serial.begin(115200);
 
-    //Start while waiting for Serial monitoring
+    // Start while waiting for Serial monitoring
     while (!Serial);
 
     delay(3000);
@@ -87,13 +87,13 @@ void setup()
         delay(200);
     }
 
-    //Set the working voltage of the modem, please do not modify the parameters
-    PMU.setDC3Voltage(3000);    //SIM7080 Modem main power channel 2700~ 3400V
+    // Set the working voltage of the modem, please do not modify the parameters
+    PMU.setDC3Voltage(3000);    // SIM7080 Modem main power channel 2700~ 3400V
     PMU.enableDC3();
 
-    //Modem GPS Power channel
+    // Modem GPS Power channel
     PMU.setBLDO2Voltage(3300);
-    PMU.enableBLDO2();      //The antenna power must be turned on to use the GPS function
+    PMU.enableBLDO2();      // The antenna power must be turned on to use the GPS function
 
     // TS Pin detection must be disable, otherwise it cannot be charged
     PMU.disableTSPinMeasure();
@@ -155,7 +155,7 @@ void setup()
      * step 4 : Set the network mode to NB-IOT
     ***********************************/
 
-    modem.setNetworkMode(2);    //use automatic
+    modem.setNetworkMode(2);    // use automatic
 
     modem.setPreferredMode(MODEM_NB_IOT);
 
@@ -226,7 +226,7 @@ void setup()
     Serial.println(csq);
 
 
-    //Enable PSM Event report
+    // Enable PSM Event report
     modem.sendAT("+CPSMSTATUS=1");
     if (modem.waitResponse() != 1) {
         Serial.println("Enable PSM Event report Failed!"); return;
@@ -256,19 +256,19 @@ void setup()
 
 
 
-    //AT+CSCLK=1 : Enable sleep mode 1.
+    // AT+CSCLK=1 : Enable sleep mode 1.
 #if 0
     // AT+CSCLK=1
     modem.sendAT("+CSCLK=1");
     if (modem.waitResponse() != 1) {
         Serial.println("Enable modem sleep failed!");
     }
-    //Pulling up DTR pin, module will go to normal sleep mode
+    // Pulling up DTR pin, module will go to normal sleep mode
     digitalWrite(BOARD_MODEM_DTR_PIN, HIGH);
 
 
 
-    //Pulling down DTR pin will wake module up from sleep mode.
+    // Pulling down DTR pin will wake module up from sleep mode.
     digitalWrite(BOARD_MODEM_DTR_PIN, LOW);
 #endif
 }

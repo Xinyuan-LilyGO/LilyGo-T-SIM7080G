@@ -170,7 +170,7 @@ void setup() {
     // TS Pin detection must be disabled, otherwise it cannot be charged
     PMU.disableTSPinMeasure();
 
-    SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);   //set sdcard pin use 1-bit mode
+    SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);   // set sdcard pin use 1-bit mode
 
     if (!SD_MMC.begin("/sdcard", true)) {
         Serial.println("Card Mount Failed");
