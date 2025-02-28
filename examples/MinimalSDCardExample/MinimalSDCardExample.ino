@@ -183,7 +183,7 @@ void setup()
 
     Serial.begin(115200);
 
-    //Start while waiting for Serial monitoring
+    // Start while waiting for Serial monitoring
     while (!Serial);
 
     delay(3000);
@@ -200,7 +200,7 @@ void setup()
             delay(5000);
         }
     }
-    //Set the working voltage of the sdcard, please do not modify the parameters
+    // Set the working voltage of the sdcard, please do not modify the parameters
     PMU.setALDO3Voltage(3300);   // SD Card VDD 3300
     PMU.enableALDO3();
 
@@ -212,7 +212,7 @@ void setup()
      * step 2 : start sd card
     ***********************************/
 
-    SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);   //set sdcard pin use 1-bit mode
+    SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);   // set sdcard pin use 1-bit mode
 
     if (!SD_MMC.begin("/sdcard", true)) {
         Serial.println("Card Mount Failed");
