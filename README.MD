@@ -143,3 +143,38 @@ Please enter the upload mode manually.
 | Modem          | Camera            | ESP32S3 | SDCard | Level conversion |
 | -------------- | ----------------- | ------- | ------ | ---------------- |
 | DC3/BLDO2(GPS) | ALDO1/ALDO2/ALDO4 | DC1     | ALDO3  | BLDO1            |
+
+
+## Voltage range
+
+| Battery Voltage requirements | Minimum | Maximum | Charging Current              |
+| ---------------------------- | ------- | ------- | ----------------------------- |
+| SIM7080G                     | 3.5V    | 4.2V    | Custom adjustment, maximum 1A |
+
+* It is recommended to use 18650 batteries with a capacity of more than 2500mA
+
+| Solar Voltage requirements | Minimum | Maximum | Charging Current |
+| -------------------------- | ------- | ------- | ---------------- |
+| SIM7080G                   | 4.4V    | 6V      | 500mA            |
+
+* It is recommended to use a solar panel with an output voltage of 6V or 5V and a recommended power of about 5~10W. Solar energy can only charge the battery and cannot power the board without the battery.
+
+## ON-BOARD LED
+
+| FUNCTION            | COLOR                                                |
+| ------------------- | ---------------------------------------------------- |
+| MODEM STATUS        | RED   (Near the modem)                               |
+| MODEM NETWORK STATE | RED   (Near the modem)                               |
+| CHARGE LED          | BLUE (Controlled by PMU, default charging indicator) |
+
+* The network status light can be turned off by command, please see the AT manual `AT+CNETLIGHT` command
+* Status light cannot be turned off
+
+### **MODEM NETWORK STATE**
+
+| Network light status | Module working status                                                                                     |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| 64ms on/ 800ms off   | When not registered on the network                                                                        |
+| 64ms on/ 3000ms off  | Already registered on the network (PS domain registration successful)                                     |
+| 64ms on/ 300ms off   | During data transmission (PPP dial-up state and when using internal TCP/FTP/HTTP and other data services) |
+| Off                  | Power off or PSM sleep mode                                                                               |
