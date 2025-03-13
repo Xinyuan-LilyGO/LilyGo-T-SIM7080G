@@ -50,7 +50,7 @@ void setup()
 
     Serial.begin(115200);
 
-    //Start while waiting for Serial monitoring
+    // Start while waiting for Serial monitoring
     while (!Serial);
 
     delay(3000);
@@ -75,13 +75,13 @@ void setup()
         delay(200);
     }
 
-    //Set the working voltage of the modem, please do not modify the parameters
-    PMU.setDC3Voltage(3000);    //SIM7080 Modem main power channel 2700~ 3400V
+    // Set the working voltage of the modem, please do not modify the parameters
+    PMU.setDC3Voltage(3000);    // SIM7080 Modem main power channel 2700~ 3400V
     PMU.enableDC3();
 
-    //Modem GPS Power channel
+    // Modem GPS Power channel
     PMU.setBLDO2Voltage(3300);
-    PMU.enableBLDO2();      //The antenna power must be turned on to use the GPS function
+    PMU.enableBLDO2();      // The antenna power must be turned on to use the GPS function
 
     // TS Pin detection must be disable, otherwise it cannot be charged
     PMU.disableTSPinMeasure();
@@ -122,7 +122,7 @@ void setup()
      * step 3 : start modem gps function
     ***********************************/
 
-    //  When configuring GNSS, you need to stop GPS first
+    // When configuring GNSS, you need to stop GPS first
     modem.disableGPS();
     delay(500);
 
@@ -142,9 +142,9 @@ void setup()
         1 Start GALILEAN NMEA out.
     <qzss mode> QZSS work mode.
         0 Stop QZSS NMEA out.
-        1 Start QZSS NMEA out.*/
-
-    //GNSS Work Mode Set GPS+BEIDOU
+        1 Start QZSS NMEA out.
+    */
+    // GNSS Work Mode Set GPS+BEIDOU
     modem.sendAT("+CGNSMOD=1,1,0,0,0");
     modem.waitResponse();
 

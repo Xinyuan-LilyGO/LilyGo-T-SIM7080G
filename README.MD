@@ -76,6 +76,13 @@ examples
 - Upload Speed -> 921600
 4. Insert USB into the PC and click Upload <If the upload fails, see Tips>
 
+### Use reference
+
+|   Product   |                             Youtube  link                             |                  explanation                    | Status | 
+| :---------: | :-------------------------------------------------------------------: |:-----------------------------------------------:| :----: |
+| T -7080G | [Youtube link](https://www.youtube.com/watch?v=lGctqLDGHz4) |    How to update the firmware of SIM7080G series products     |   ✅    |
+| LilyGo device | [Youtube link](https://www.youtube.com/watch?v=f3BybP3L7ls) |    How to enter boot mode to download the firmware     |   ✅    |
+
 ## 3️⃣ Tips
 
 0. T-SIM7080 has two USB ports, the USB-C port is used to upload sketches and Serial output, and Micro-USB is used for SIM7080G firmware version upgrade

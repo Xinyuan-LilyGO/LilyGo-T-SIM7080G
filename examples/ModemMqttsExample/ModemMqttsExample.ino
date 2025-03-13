@@ -88,7 +88,7 @@ const char *apn = "Your APN";
 const char gprsUser[] = "";
 const char gprsPass[] = "";
 
-//  server address and port
+// server address and port
 const char server[] = "test.mosquitto.org";
 const int  port     = 8883;
 
@@ -267,7 +267,7 @@ void setup()
 
     Serial.printf("getNetworkMode:%u getPreferredMode:%u\n", mode, pre);
 
-    //Set the APN manually. Some operators need to set APN first when registering the network.
+    // Set the APN manually. Some operators need to set APN first when registering the network.
     modem.sendAT("+CGDCONT=1,\"IP\",\"", apn, "\"");
     if (modem.waitResponse() != 1) {
         Serial.println("Set operators apn Failed!");
@@ -371,11 +371,11 @@ void setup()
         return;
     }
 
-    //   modem.sendAT("+SMCONF=\"USERNAME\",\"", username, "\"");
-    //   if (modem.waitResponse() != 1) { return; }
+    // modem.sendAT("+SMCONF=\"USERNAME\",\"", username, "\"");
+    // if (modem.waitResponse() != 1) { return; }
 
-    //   modem.sendAT("+SMCONF=\"PASSWORD\",\"", password, "\"");
-    //   if (modem.waitResponse() != 1) { return; }
+    // modem.sendAT("+SMCONF=\"PASSWORD\",\"", password, "\"");
+    // if (modem.waitResponse() != 1) { return; }
 
     // AT+CSSLCFG="SSLVERSION",<ctxindex>,<sslversion>
     modem.sendAT("+CSSLCFG=\"SSLVERSION\",0,3");

@@ -77,7 +77,7 @@ char clientID[] = "<CLIENT ID>";
 //  4. Button
 //  5. Fill in the name and select the newly created equipment
 //  6. Channel is filled as 1
-//  7.  Choose ICON
+//  7. Choose ICON
 //  8. Add Widget
 int command_channel = 1;
 
@@ -98,7 +98,7 @@ void setup()
 
     Serial.begin(115200);
 
-    //Start while waiting for Serial monitoring
+    // Start while waiting for Serial monitoring
     while (!Serial);
 
     delay(3000);
@@ -123,13 +123,13 @@ void setup()
         delay(200);
     }
 
-    //Set the working voltage of the modem, please do not modify the parameters
-    PMU.setDC3Voltage(3000);    //SIM7080 Modem main power channel 2700~ 3400V
+    // Set the working voltage of the modem, please do not modify the parameters
+    PMU.setDC3Voltage(3000);    // SIM7080 Modem main power channel 2700~ 3400V
     PMU.enableDC3();
 
-    //Modem GPS Power channel
+    // Modem GPS Power channel
     PMU.setBLDO2Voltage(3300);
-    PMU.enableBLDO2();      //The antenna power must be turned on to use the GPS function
+    PMU.enableBLDO2();      // The antenna power must be turned on to use the GPS function
 
     // TS Pin detection must be disable, otherwise it cannot be charged
     PMU.disableTSPinMeasure();
@@ -183,7 +183,7 @@ void setup()
      * step 4 : Set the network mode to NB-IOT
     ***********************************/
 
-    modem.setNetworkMode(2);    //use automatic
+    modem.setNetworkMode(2);    // use automatic
 
     modem.setPreferredMode(MODEM_NB_IOT);
 
@@ -194,7 +194,7 @@ void setup()
     Serial.printf("getNetworkMode:%u getPreferredMode:%u\n", mode, pre);
 
 
-    //Set the APN manually. Some operators need to set APN first when registering the network.
+    // Set the APN manually. Some operators need to set APN first when registering the network.
     modem.sendAT("+CGDCONT=1,\"IP\",\"", apn, "\"");
     if (modem.waitResponse() != 1) {
         Serial.println("Set operators apn Failed!");
@@ -333,9 +333,9 @@ void loop()
         result = result.substring(index + 1);
         result.replace("\"", "");
 
-        //Get command value
+        // Get command value
         char value = result[result.length() - 1];
-        //Get Sep
+        // Get Sep
         result = result.substring(0, result.length() - 2);
 
         String payload = "ok,";
