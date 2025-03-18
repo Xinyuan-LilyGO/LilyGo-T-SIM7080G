@@ -1,15 +1,10 @@
-
-
-
 <h1 align = "center">✨ LilyGO T-SIM7080G ✨</h1>
 
 ## **[English](README.MD) | 中文**
 
-
 ## 1️⃣ 示例预览
 
 ```
-
 examples 
 ├─AllFunction                       # 全功能测试示例
 ├─ATDebug                           # AT命令示例
@@ -37,9 +32,7 @@ examples
 ├─SIM7080G-ATT-NB-IOT-AWS-MQTT      # MQTTS AWS By @bootcampiot
 ├─SIM7080G-ATT-NB-IOT-HTTP-HTTPS    # HTTP/HTTPS  By @bootcampiot
 └─SIM7080G-ATT-NB-IOT-SSL-Mosquitto # MQTTS Mosquitto By @bootcampiot
-
 ```
-
 
 ## 2️⃣ 快速开始
 
@@ -55,9 +48,7 @@ examples
 8. 点击（→）上传固件
 9. 点击 (插头符号) 监视串行输出
 
-
 ### ArduinoIDE
-
 
 1. 安装 [ArduinoIDE](https://www.arduino.cc/en/software)
 2. 将 `LilyGo-T-SIM7080G/lib` 目录内的所有文件夹拷贝到`<C:\Users\UserName\Documents\Arduino\libraries>`,如果没有`libraries`目录,请新建,请注意,不是拷贝`lib`目录,而是拷贝lib目录里面的文件夹
@@ -75,13 +66,13 @@ examples
    - Upload Mode -> UART0/Hardware CDC
    - Upload Speed -> 921600
 4. 插入USB到PC,点击上传<如果无法顺利上传,请保持按压BOOT按键,然后单击RST,然后再点击上传,上传完成时需要点击RST退出下载模式>
+
 ### Use reference
 
 |   Product   |                             Youtube  link                             |                  explanation                    | Status | 
 | :---------: | :-------------------------------------------------------------------: |:-----------------------------------------------:| :----: |
 | T -7080G | [Youtube link](https://www.youtube.com/watch?v=lGctqLDGHz4) |    How to update the firmware of SIM7080G series products     |   ✅    |
 | LilyGo device | [Youtube link](https://www.youtube.com/watch?v=f3BybP3L7ls) |    How to enter boot mode to download the firmware     |   ✅    |
-
 
 ## 3️⃣ 提示:
 
@@ -100,7 +91,6 @@ examples
 12. ⚠ **请在更改外设电压之前明白需要面临的风险,否则请不要尝试更改摄像头和其他板载设备的电压,可能会面临永久性的损坏**
 13. ⚠ **请不要关闭BLDO1电源，否则ESP32S3与SIM7080G无法正常通讯.**
 14. 更新调制解调器内置固件请查看[操作说明](./docs/sim7080_update_firmware.md),一般情况下不建议升级固件.
-
 
 ## 4️⃣ 在哪购买:
 
@@ -122,22 +112,19 @@ examples
    Wire.begin(sda,scl)
    ```
 
-
 | Modem | PWR | RXD | TXD | RI  | DTR |
 | ----- | --- | --- | --- | --- | --- |
 | GPIO  | 41  | 4   | 5   | 3   | 42  |
-
 
 | PMU  | SDA | SCL | IRQ |
 | ---- | --- | --- | --- |
 | GPIO | 15  | 7   | 6   |
 
-
 | SDCard | CMD | CLK | DATA |
 | ------ | --- | --- | ---- |
 | GPIO   | 39  | 38  | 40   |
 
-## 电源域
+## 6️⃣ 电源域
 
 | Modem          | Camera            | ESP32S3 | SDCard | Level conversion |
 | -------------- | ----------------- | ------- | ------ | ---------------- |

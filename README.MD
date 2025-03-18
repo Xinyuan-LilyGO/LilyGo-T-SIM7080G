@@ -7,11 +7,9 @@
 - SIM7080G supports **NB-IoT** and **Cat-M** in global frequency bands, but does **not support 2G/3G/4G**. Please confirm that the SIM card used supports **NB-IoT** or **Cat-M** before use.
 - The SIM card must be inserted first before starting the SIM7080. If the SIM card is inserted after the SIM7080 is turned on, the modem will not be able to detect the SIM card.
 
-
 ## 1️⃣ Examples preview
 
 ```
-
 examples 
 ├─AllFunction                       # Full function test example
 ├─ATDebug                           # AT Commands Example
@@ -39,9 +37,7 @@ examples
 ├─SIM7080G-ATT-NB-IOT-AWS-MQTT      # MQTTS AWS By @bootcampiot
 ├─SIM7080G-ATT-NB-IOT-HTTP-HTTPS    # HTTP/HTTPS  By @bootcampiot
 └─SIM7080G-ATT-NB-IOT-SSL-Mosquitto # MQTTS Mosquitto By @bootcampiot
-
 ```
-
 
 ## 2️⃣ Quick Start
 
@@ -135,30 +131,27 @@ Please enter the upload mode manually.
 | ----- | --- | --- | --- | --- | --- |
 | GPIO  | 41  | 4   | 5   | 3   | 42  |
 
-
 | PMU  | SDA | SCL | IRQ |
 | ---- | --- | --- | --- |
 | GPIO | 15  | 7   | 6   |
-
 
 | SDCard | CMD | CLK | DATA |
 | ------ | --- | --- | ---- |
 | GPIO   | 39  | 38  | 40   |
 
-## Power domain
+## 6️⃣ Power domain
 
 | Modem          | Camera            | ESP32S3 | SDCard | Level conversion |
 | -------------- | ----------------- | ------- | ------ | ---------------- |
 | DC3/BLDO2(GPS) | ALDO1/ALDO2/ALDO4 | DC1     | ALDO3  | BLDO1            |
 
-
-## Voltage range
+## 7️⃣ Voltage range
 
 | Battery Voltage requirements | Minimum | Maximum | Charging Current              |
 | ---------------------------- | ------- | ------- | ----------------------------- |
 | SIM7080G                     | 3.5V    | 4.2V    | Custom adjustment, maximum 1A |
 
-* It is recommended to use 18650 batteries with a capacity of more than 2500mA
+* It is recommended to use flat top 18650 batteries with a capacity of more than 2500mA
 
 | Solar Voltage requirements | Minimum | Maximum | Charging Current |
 | -------------------------- | ------- | ------- | ---------------- |
@@ -166,7 +159,7 @@ Please enter the upload mode manually.
 
 * It is recommended to use a solar panel with an output voltage of 6V or 5V and a recommended power of about 5~10W. Solar energy can only charge the battery and cannot power the board without the battery.
 
-## ON-BOARD LED
+## 8️⃣ ON-BOARD LED
 
 | FUNCTION            | COLOR                                                |
 | ------------------- | ---------------------------------------------------- |
