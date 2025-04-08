@@ -12,7 +12,6 @@
 ![web_flasher](./images/esp_downloader.gif)
 
 * Note that after writing is completed, you need to press RST to reset.
-* When writing the keyboard firmware, you need to select ESP32-C3 in the chip type
 
 ### Use Web Flasher
 
