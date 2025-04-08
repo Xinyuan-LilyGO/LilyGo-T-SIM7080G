@@ -1,12 +1,55 @@
+## News
 
-When you suspect that there is a problem with the hardware, you can brush in our test firmware
+* The firmware supports any one in the list below. The firmware used in the list below is the same and there is no need to distinguish it.
 
-1. Download [Flash_download_tool](https://www.espressif.com.cn/sites/default/files/tools/flash_download_tool_3.9.3_0.zip)
-2. Select esp32s3,USB
+## 1️How to Flash ?
 
-    ![](../image/firmware_esp32s3_1.png)
 
-3. Press and hold the BOOT button on the board, do not release it, then insert the USB, and finally release the BOOT button
-4. Select according to the following figure, finally select START, press RST after writing, or power on again, and then observe the log output from the serial port
+### Use ESP Download Tool
 
-    ![](../image/firmware_esp32s3_2.png)
+- Download [Flash_download_tool](https://www.espressif.com.cn/sites/default/files/tools/flash_download_tool_3.9.7_0.zip)
+
+![web_flasher](./images/esp_downloader.gif)
+
+* Note that after writing is completed, you need to press RST to reset.
+* When writing the keyboard firmware, you need to select ESP32-C3 in the chip type
+
+### Use Web Flasher
+
+- [ESP Web Flasher Online](https://espressif.github.io/esptool-js/)
+
+![web_flasher](./images/web_flasher.gif)
+
+* Note that after writing is completed, you need to press RST to reset.
+
+### Use command line
+
+
+If system asks about install Developer Tools, do it.
+
+```bash
+python3 -m pip install --upgrade pip
+python3 -m pip install esptool
+```
+
+In order to launch esptool.py, exec directly with this:
+
+```bash
+python3 -m esptool
+```
+
+```bash
+esptool --chip esp32s3  --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m 0x0 firmware_file.bin
+
+```
+
+# 3.FAQ
+
+- Can't upload any sketch，Please enter the upload mode manually.
+  1. Connect the board via the USB cable
+  2. Press and hold the **BOOT** button , While still pressing the **BOOT** button, **Not SBOOT**
+  3. Press **RST** button
+  4. Release the **RST** button
+  5. Release the **BOOT** button
+  6. Upload sketch
+  7. Press the **RST** button to exit download mode
