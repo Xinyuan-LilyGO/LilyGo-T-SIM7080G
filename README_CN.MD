@@ -20,6 +20,7 @@ examples
 ├─MinimalModemNBIOTExample          # SIM7080G NBIOT 示例
 ├─MinimalModemPowerSaveMode         # SIM7080G 电源保持示例
 ├─MinimalModemSleepMode             # SIM7080G 睡眠示例
+├─MinimalModemAndEspSleep           # SIM7080G & ESP32 睡眠示例
 ├─MinimalModemUpgrade               # SIM7080G 升级内置固件
 ├─MinimalPowersCurrentExample       # PMU 充电电流调试
 ├─MinimalPowersExample              # PMU使用示例
