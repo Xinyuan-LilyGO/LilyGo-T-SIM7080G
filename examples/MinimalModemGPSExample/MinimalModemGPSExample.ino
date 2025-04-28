@@ -122,11 +122,11 @@ void setup()
      * step 3 : start modem gps function
     ***********************************/
 
+#if 0
     // When configuring GNSS, you need to stop GPS first
     modem.disableGPS();
     delay(500);
 
-#if 0
     /*
     ! GNSS Work Mode Set
      <gps mode> GPS work mode.
@@ -168,8 +168,9 @@ void setup()
     // Turn off GNSS.
     modem.sendAT("+SGNSCMD=0");
     modem.waitResponse();
-#endif
+
     delay(500);
+#endif
 
     // GPS function needs to be enabled for the first use
     if (modem.enableGPS() == false) {
@@ -200,13 +201,10 @@ void loop()
 
         // After successful positioning, the PMU charging indicator flashes quickly
         PMU.setChargingLedMode(XPOWERS_CHG_LED_BLINK_4HZ);
-        while (1) {
-            delay(1000);
-        }
     } else {
         // Blinking PMU charging indicator
         PMU.setChargingLedMode(level ? XPOWERS_CHG_LED_ON : XPOWERS_CHG_LED_OFF);
         level ^= 1;
-        delay(1000);
     }
+    delay(1000);
 }
