@@ -1,5 +1,5 @@
 /**
- * @file      camera.h
+ * @file      camera.cpp
  * @author    Lewis He (lewishe@outlook.com)
  * @license   MIT
  * @copyright Copyright (c) 2022  Shenzhen Xin Yuan Electronic Technology Co., Ltd
@@ -15,9 +15,11 @@ static QueueHandle_t xQueueFrameO = NULL;
 
 void camera_task_hander(void *ptr)
 {
-    while (true) {
+    while (true)
+    {
         camera_fb_t *frame = esp_camera_fb_get();
-        if (frame) {
+        if (frame)
+        {
             xQueueSend(xQueueFrameO, &frame, portMAX_DELAY);
         }
     }
@@ -47,7 +49,7 @@ bool setupCamera()
     config.xclk_freq_hz = 20000000;
     config.frame_size = FRAMESIZE_UXGA;
     config.pixel_format = PIXFORMAT_JPEG; // for streaming
-    //config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
+    // config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
     config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
     config.fb_location = CAMERA_FB_IN_PSRAM;
     config.jpeg_quality = 12;
@@ -55,18 +57,23 @@ bool setupCamera()
 
     // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
     //                      for larger pre-allocated frame buffer.
-    if (config.pixel_format == PIXFORMAT_JPEG) {
-        if (psramFound()) {
+    if (config.pixel_format == PIXFORMAT_JPEG)
+    {
+        if (psramFound())
+        {
             config.jpeg_quality = 10;
             config.fb_count = 2;
             config.grab_mode = CAMERA_GRAB_LATEST;
-        } else {
+        }
+        else
+        {
             // Limit the frame size when PSRAM is not available
             config.frame_size = FRAMESIZE_SVGA;
             config.fb_location = CAMERA_FB_IN_DRAM;
         }
-
-    } else {
+    }
+    else
+    {
         // Best option for face detection/recognition
         config.frame_size = FRAMESIZE_240X240;
 #if CONFIG_IDF_TARGET_ESP32S3
@@ -76,20 +83,23 @@ bool setupCamera()
 
     // camera init
     esp_err_t err = esp_camera_init(&config);
-    if (err != ESP_OK) {
+    if (err != ESP_OK)
+    {
         Serial.printf("ERROR: Camera init failed with error 0x%x", err);
         return false;
     }
 
     sensor_t *s = esp_camera_sensor_get();
     // initial sensors are flipped vertically and colors are a bit saturated
-    if (s->id.PID == OV3660_PID) {
-        s->set_vflip(s, 1); // flip it back
-        s->set_brightness(s, 1); // up the brightness just a bit
+    if (s->id.PID == OV3660_PID)
+    {
+        s->set_vflip(s, 1);       // flip it back
+        s->set_brightness(s, 1);  // up the brightness just a bit
         s->set_saturation(s, -2); // lower the saturation
     }
     // drop down frame size for higher initial frame rate
-    if (config.pixel_format == PIXFORMAT_JPEG) {
+    if (config.pixel_format == PIXFORMAT_JPEG)
+    {
         s->set_framesize(s, FRAMESIZE_QVGA);
     }
 
@@ -107,51 +117,23 @@ bool setupCamera()
 bool setupCameraTask(const QueueHandle_t frame_o)
 {
     xQueueFrameO = frame_o;
-    if (setupCamera()) {
+    if (setupCamera())
+    {
         xTaskCreatePinnedToCore(camera_task_hander, "App/cam", 2 * 1024, NULL, 5, NULL, 1);
         return true;
     }
     return false;
 }
 
-
 void nextFrameSize()
 {
     frameSize++;
     frameSize %= FRAMESIZE_HD;
-    if (frameSize == FRAMESIZE_96X96 ) {
+    if (frameSize == FRAMESIZE_96X96)
+    {
         frameSize = FRAMESIZE_QVGA;
     }
     Serial.printf("set frame size = %u\n", frameSize);
     sensor_t *sensor = esp_camera_sensor_get();
     sensor->set_framesize(sensor, (framesize_t)frameSize);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
