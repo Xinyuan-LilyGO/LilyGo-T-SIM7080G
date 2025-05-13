@@ -6,9 +6,7 @@
  * @date      2022-09-16
  *
  */
-
 #pragma once
-
 
 void setupNetwork(bool setup_AP_Mode);
 void loopNetwork();
