@@ -8,13 +8,13 @@
  */
 #include <Arduino.h>
 #include "camera.h"
-#include "power.h"
+#include "esp_camera.h"
+#include "modem.h"
 #include "network.h"
+#include "power.h"
+#include "sdcard.h"
 #include "server.h"
 #include "utilities.h"
-#include "esp_camera.h"
-#include "sdcard.h"
-#include "modem.h"
 
 void startCameraServer();
 void loopPeripherals(void *ptr);
@@ -36,8 +36,9 @@ void setup()
 
     getWakeupReason();
 
-    if (!psramFound()) {
-        Serial.println("ERROR:PSRAM not find !");
+    if (!psramFound())
+    {
+        Serial.println("ERROR: PSRAM not found!");
     }
 
     Serial.println("=========================================");
@@ -52,7 +53,8 @@ void setup()
 
     ret = setupCamera();
 
-    while (!ret) {
+    while (!ret)
+    {
         delay(1000);
     }
 
@@ -70,8 +72,8 @@ void setup()
     setupServer();
 
     /*
-    * espressif official example, using asynchronous streaming, unstable, not recommended
-    * */
+     * espressif official example, using asynchronous streaming, unstable, not recommended
+     */
     // startCameraServer();
 
     xTaskCreate(loopPeripherals, "App/per", 4 * 1024, NULL, 8, NULL);
@@ -81,7 +83,6 @@ void setup()
     Serial.print("Camera Ready! Use 'http://");
     Serial.print(getIpAddress());
     Serial.println("' to connect");
-
 }
 
 void loop()
@@ -89,14 +90,14 @@ void loop()
     loopServer();
 }
 
-
 void getWakeupReason()
 {
     esp_sleep_wakeup_cause_t wakeup_reason;
 
     wakeup_reason = esp_sleep_get_wakeup_cause();
 
-    switch (wakeup_reason) {
+    switch (wakeup_reason)
+    {
     case ESP_SLEEP_WAKEUP_UNDEFINED:
         //!< In case of deep sleep, reset was not caused by exit from deep sleep
         Serial.println("In case of deep sleep, reset was not caused by exit from deep sleep");
@@ -125,7 +126,7 @@ void getWakeupReason()
         //!< Wakeup caused by ULP program
         Serial.println("Wakeup caused by ULP program");
         break;
-    case  ESP_SLEEP_WAKEUP_GPIO:
+    case ESP_SLEEP_WAKEUP_GPIO:
         //!< Wakeup caused by GPIO (light sleep only)
         Serial.println("Wakeup caused by GPIO (light sleep only)");
         break;
@@ -145,22 +146,20 @@ void getWakeupReason()
         //!< Wakeup caused by COCPU crash
         Serial.println("Wakeup caused by COCPU crash");
         break;
-    case  ESP_SLEEP_WAKEUP_BT:
+    case ESP_SLEEP_WAKEUP_BT:
         //!< Wakeup caused by BT (light sleep only)
         Serial.println("Wakeup caused by BT (light sleep only)");
         break;
-    default :
+    default:
         Serial.printf("Wakeup was not caused by deep sleep: %d\n", wakeup_reason);
         break;
-
     }
 }
 
-
-
 void loopPeripherals(void *ptr)
 {
-    while (1) {
+    while (1)
+    {
         loopPower();
         loopNetwork();
         delay(8);
