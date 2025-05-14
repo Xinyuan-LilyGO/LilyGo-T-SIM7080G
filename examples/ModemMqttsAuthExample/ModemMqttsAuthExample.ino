@@ -310,12 +310,10 @@ void setup()
     /*********************************
      * step 3 : Check if the SIM card is inserted
     ***********************************/
-    String result ;
-
 
     if (modem.getSimStatus() != SIM_READY) {
-        Serial.println("SIM Card is not insert!!!");
-        return ;
+        Serial.println("SIM Card is not inserted!!!");
+        return;
     }
 
     // Disable RF
@@ -323,7 +321,6 @@ void setup()
     if (modem.waitResponse(20000UL) != 1) {
         Serial.println("Disable RF Failed!");
     }
-
 
     /*********************************
      * step 4 : Set the network mode to NB-IOT

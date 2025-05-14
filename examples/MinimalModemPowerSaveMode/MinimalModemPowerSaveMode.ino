@@ -130,23 +130,20 @@ void setup()
     /*********************************
      * step 3 : Check if the SIM card is inserted
     ***********************************/
-    String result ;
-
 
     if (modem.getSimStatus() != SIM_READY) {
-        Serial.println("SIM Card is not insert!!!");
-        return ;
+        Serial.println("SIM Card is not inserted!!!");
+        return;
     }
-
 
     // Assuming that PSM mode is enabled, turn it off first.
     // modem.sendAT("+CPSMS=0,,,\"01011111\",\"00000001\"");
     // if (modem.waitResponse(5000) == 1) {
     //     Serial.println("PSM Mode disable OK!");
     //     if (modem.waitResponse(30000, "+CPSMSTATUS:") == 1) {
-    //         result = modem.stream.readStringUntil('\r');
+    //         String result = modem.stream.readStringUntil('\r');
     //         Serial.println();
-    //         Serial.print("Relust:");
+    //         Serial.print("Result:");
     //         Serial.println(result);
     //     }
     // }

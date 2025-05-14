@@ -237,16 +237,14 @@ void setup()
     Serial.println("............................................................................Step 3");
     Serial.println("start to check if the SIM card is inserted ");
 
-    String result;
-
     if (modem.getSimStatus() != SIM_READY)
     {
-        Serial.println("SIM Card is not insert!!!");
+        Serial.println("SIM Card is not inserted!!!");
         return;
     }
     else
     {
-        Serial.println("SIM Card is insert !");
+        Serial.println("SIM Card is inserted !");
     }
     Serial.println("Step 3 done !");
     /***********************************
