@@ -15,7 +15,6 @@
 #include <TinyGsmClient.h>
 #include "utilities.h"
 
-
 #if defined(USING_MODEM)
 
 const char *register_info[] = {
@@ -35,9 +34,9 @@ const char gprsPass[] = "";
 #ifdef DUMP_AT_COMMANDS
 #include <StreamDebugger.h>
 StreamDebugger debugger(Serial1, Serial);
-TinyGsm        modem(debugger);
+TinyGsm modem(debugger);
 #else
-TinyGsm        modem(Serial1);
+TinyGsm modem(Serial1);
 #endif
 
 bool getLocation();
@@ -59,9 +58,11 @@ void setupModem()
 
     int retryCount = 0;
     int retry = 0;
-    while (!modem.testAT(1000)) {
+    while (!modem.testAT(1000))
+    {
         Serial.print(".");
-        if (retry++ > 5) {
+        if (retry++ > 5)
+        {
             Serial.println("Warn : try reinit modem!");
             // Pull down PWRKEY for more than 1 second according to manual requirements
             digitalWrite(BOARD_MODEM_PWR_PIN, LOW);
@@ -76,19 +77,24 @@ void setupModem()
 
     Serial.print("Modem started!");
 
-    if (modem.getSimStatus() != SIM_READY) {
+    if (modem.getSimStatus() != SIM_READY)
+    {
         Serial.println("SIM Card is not insert!!!");
-        return ;
+        return;
     }
 
     SIM70xxRegStatus s;
-    do {
+    do
+    {
         s = modem.getRegistrationStatus();
         int16_t sq = modem.getSignalQuality();
 
-        if ( s == REG_SEARCHING) {
+        if (s == REG_SEARCHING)
+        {
             Serial.print("Searching...");
-        } else {
+        }
+        else
+        {
             Serial.print("Other code:");
             Serial.print(s);
             break;
@@ -100,14 +106,18 @@ void setupModem()
 
     Serial.println();
     Serial.print("Network register info:");
-    if (s >= sizeof(register_info) / sizeof(*register_info)) {
+    if (s >= sizeof(register_info) / sizeof(*register_info))
+    {
         Serial.print("Other result = ");
         Serial.println(s);
-    } else {
+    }
+    else
+    {
         Serial.println(register_info[s]);
     }
 
-    if (modem.enableGPS() == false) {
+    if (modem.enableGPS() == false)
+    {
         Serial.println("Enable gps failed!");
     }
 
@@ -117,8 +127,10 @@ void setupModem()
 void locationTask(void *)
 {
     Serial.println("Get location");
-    while (1) {
-        if (getLocation()) {
+    while (1)
+    {
+        if (getLocation())
+        {
             Serial.println();
             break;
         }
@@ -127,7 +139,6 @@ void locationTask(void *)
     }
     vTaskDelete(NULL);
 }
-
 
 bool getLocation()
 {
@@ -146,18 +157,12 @@ bool getLocation()
     int   sec      = 0;
 
     if (modem.getGPS(&lat, &lon, &speed, &alt, &vsat, &usat, &accuracy,
-                     &year, &month, &day, &hour, &min, &sec)) {
+                     &year, &month, &day, &hour, &min, &sec))
+    {
         Serial.println();
-        Serial.print("lat:"); Serial.print(String(lat, 8)); Serial.print("\t");
-        Serial.print("lon:"); Serial.print(String(lon, 8)); Serial.println();
-        Serial.print("speed:"); Serial.print(speed); Serial.print("\t");
-        Serial.print("alt:"); Serial.print(alt); Serial.println();
-        Serial.print("year:"); Serial.print(year);
-        Serial.print(" month:"); Serial.print(month);
-        Serial.print(" day:"); Serial.print(day);
-        Serial.print(" hour:"); Serial.print(hour);
-        Serial.print(" min:"); Serial.print(min);
-        Serial.print(" sec:"); Serial.print(sec); Serial.println();
+        Serial.printf("lat:%.8f\tlon:%.8f\n", lat, lon);
+        Serial.printf("speed:%f\talt:%f\n", speed, alt);
+        Serial.printf("year:%d month:%d day:%d hour:%d min:%d sec:%d\n", year, month, day, hour, min, sec);
         Serial.println();
         return true;
     }
@@ -167,21 +172,5 @@ bool getLocation()
 #else
 void setupModem()
 {
-
 }
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
