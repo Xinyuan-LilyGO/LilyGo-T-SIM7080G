@@ -8,7 +8,6 @@
  */
 #pragma once
 
-
 bool setupCamera();
 void nextFrameSize();
 bool setupCameraTask(const QueueHandle_t frame_o);
