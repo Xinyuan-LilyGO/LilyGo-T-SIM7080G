@@ -6,16 +6,7 @@
  * @date      2022-09-16
  *
  */
-
 #pragma once
-
-
-
 
 bool setupPower();
 void loopPower();
-
-
-
-
-
