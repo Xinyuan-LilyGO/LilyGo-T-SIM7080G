@@ -67,7 +67,7 @@ void WiFiEvent(WiFiEvent_t event)
         networkReady = true;
         break;
     case ARDUINO_EVENT_WIFI_AP_STOP:
-        Serial.println("WiFi access point  stopped");
+        Serial.println("WiFi access point stopped");
         networkReady = false;
         break;
     case ARDUINO_EVENT_WIFI_AP_STACONNECTED:
@@ -99,8 +99,9 @@ void setupNetwork(bool setup_AP_Mode)
         hostName += WiFi.macAddress().substring(0, 5);
         WiFi.softAP(hostName.c_str());
         ipAddress = WiFi.softAPIP().toString();
-        Serial.print("Started AP mode ,ip address is :");
-        Serial.println(WiFi.softAPIP().toString());
+        Serial.println("Started AP mode");
+        Serial.printf("Host name : %s\n", hostName.c_str());
+        Serial.printf("IP address is : %s\n", ipAddress.c_str());
     }
     else
     {
