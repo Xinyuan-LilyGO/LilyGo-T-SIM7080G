@@ -231,7 +231,7 @@ void setup()
     By default, ESP32 will automatically power down the peripherals
     not needed by the wakeup source, but if you want to be a poweruser
     this is for you. Read in detail at the API docs
-    http://esp-idf.readthedocs.io/en/latest/api-reference/system/deep_sleep.html
+    https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/system/sleep_modes.html
     Left the line commented as an example of how to configure peripherals.
     The line below turns off all RTC peripherals in deep sleep.
     */
