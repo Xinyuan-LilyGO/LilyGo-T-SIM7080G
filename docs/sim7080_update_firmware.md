@@ -1,6 +1,8 @@
 
 ## Quick Step
 
+* [SIM7080G-1951B17SIM7080](https://drive.google.com/file/d/1-m0eF53mw9n0vw4vfNZ88cRR3GM0T-a1/view?usp=sharing)
+
 1. Update the built-in firmware of ESP32S3 using [MinimalModemUpgrade](../examples/MinimalModemUpgrade/MinimalModemUpgrade.ino) to ensure that the program is only responsible for enabling SIM7080G
 2. Connect the two USB ports of the board, USB-C and Micro-USB, and operate according to the following image
 
