@@ -11,7 +11,7 @@
 #include "XPowersLib.h"
 #include "utilities.h"
 
-XPowersPMU  PMU;
+XPowersPMU PMU;
 
 // See all AT commands, if wanted
 #define DUMP_AT_COMMANDS
@@ -129,7 +129,8 @@ void setup()
 
     /*
     ! GNSS Work Mode Set
-     <gps mode> GPS work mode.
+    <gps mode> GPS work mode.
+        0 Stop GPS NMEA out.
         1 Start GPS NMEA out.
     <glo mode> GLONASS work mode.
         0 Stop GLONASS NMEA out.
@@ -145,7 +146,7 @@ void setup()
         1 Start QZSS NMEA out.
     */
     // GNSS Work Mode Set GPS+BEIDOU
-    modem.sendAT("+CGNSMOD=1,1,0,0,0");
+    modem.sendAT("+CGNSMOD=1,0,1,0,0");
     modem.waitResponse();
 
 
@@ -156,8 +157,8 @@ void setup()
     <minDistance> range: 0-1000
      Minimum distance in meters that must be traversed between position reports. Setting this interval to 0 will be a pure time-based tracking/batching.
     <accuracy>:
-        0  Accuracy is not specified, use default.
-        1  Low Accuracy for location is acceptable.
+        0 Accuracy is not specified, use default.
+        1 Low Accuracy for location is acceptable.
         2 Medium Accuracy for location is acceptable.
         3 Only High Accuracy for location is acceptable.
     */

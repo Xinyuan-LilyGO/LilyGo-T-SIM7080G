@@ -9,22 +9,5 @@
 
 #pragma once
 
-
 void setupModem();
 bool getLocation();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

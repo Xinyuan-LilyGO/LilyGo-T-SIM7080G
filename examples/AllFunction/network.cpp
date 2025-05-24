@@ -19,7 +19,8 @@ bool networkReady = false;
 void WiFiEvent(WiFiEvent_t event)
 {
     Serial.printf("[WiFi-event] event: %d\n", event);
-    switch (event) {
+    switch (event)
+    {
     case ARDUINO_EVENT_WIFI_READY:
         Serial.println("WiFi interface ready");
         break;
@@ -81,52 +82,54 @@ void WiFiEvent(WiFiEvent_t event)
     case ARDUINO_EVENT_WIFI_AP_PROBEREQRECVED:
         Serial.println("Received probe request");
         break;
-    default: break;
+    default:
+        break;
     }
 }
 
-
 void setupNetwork(bool setup_AP_Mode)
 {
-
     isAP = setup_AP_Mode;
 
     WiFi.onEvent(WiFiEvent);
 
-    if (setup_AP_Mode) {
-
+    if (setup_AP_Mode)
+    {
         WiFi.mode(WIFI_AP);
         hostName += WiFi.macAddress().substring(0, 5);
         WiFi.softAP(hostName.c_str());
         ipAddress = WiFi.softAPIP().toString();
         Serial.print("Started AP mode ,ip address is :");
         Serial.println(WiFi.softAPIP().toString());
-
-    } else {
-
+    }
+    else
+    {
         wifiMulti.addAP("ssid_from_AP_1", "your_password_for_AP_1");
         // wifiMulti.addAP("ssid_from_AP_2", "your_password_for_AP_2");
         // wifiMulti.addAP("ssid_from_AP_3", "your_password_for_AP_3");
-
     }
 }
 
 void loopNetwork()
 {
-    if (!isAP) {
+    if (!isAP)
+    {
         wifiMulti.run();
     }
 }
 
-
 String getIpAddress()
 {
-    if (!networkReady) {
+    if (!networkReady)
+    {
         return "";
     }
-    if (isAP) {
+    if (isAP)
+    {
         return WiFi.softAPIP().toString();
-    } else {
+    }
+    else
+    {
         return WiFi.localIP().toString();
     }
 }
