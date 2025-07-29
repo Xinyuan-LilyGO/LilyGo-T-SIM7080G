@@ -186,8 +186,7 @@ void setup()
     // Activate network bearer, APN can not be configured by default,
     // if the SIM card is locked, please configure the correct APN and user password, use the gprsConnect() method
 
-    bool res = modem.isGprsConnected();
-    if (!res) {
+    if (!modem.isGprsConnected()) {
         modem.sendAT("+CNACT=0,1");
         if (modem.waitResponse() != 1) {
             Serial.println("Activate network bearer Failed!");
@@ -198,7 +197,7 @@ void setup()
         // }
     }
 
-
+    bool res = modem.isGprsConnected();
     Serial.print("GPRS status:");
     Serial.println(res ? "connected" : "not connected");
 
