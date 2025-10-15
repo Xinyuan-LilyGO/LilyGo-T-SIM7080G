@@ -18,13 +18,15 @@ XPowersPMU PMU;
 
 #define TINY_GSM_RX_BUFFER 1024
 
+#define SerialAT Serial1
+
 #define TINY_GSM_MODEM_SIM7080
 #include <TinyGsmClient.h>
 
 
 #ifdef DUMP_AT_COMMANDS
 #include <StreamDebugger.h>
-StreamDebugger debugger(Serial1, Serial);
+StreamDebugger debugger(SerialAT, Serial);
 TinyGsm        modem(debugger);
 #else
 TinyGsm        modem(SerialAT);
@@ -122,7 +124,10 @@ void setup()
      * step 3 : start modem gps function
     ***********************************/
 
-#if 0
+// Uncomment the following section for advanced GPS configuration
+// #define ADVANCED_GPS_CONFIG
+
+#ifdef ADVANCED_GPS_CONFIG
     // When configuring GNSS, you need to stop GPS first
     modem.disableGPS();
     delay(500);
@@ -175,37 +180,56 @@ void setup()
 
     // GPS function needs to be enabled for the first use
     if (modem.enableGPS() == false) {
-        Serial.print("Modem enable gps function failed!!");
+        Serial.println("Modem enable gps function failed!!");
         while (1) {
             delay(5000);
         }
     }
+    
+    Serial.println("GPS enabled, waiting for GPS fix...");
+    Serial.println("This may take several minutes for first fix...");
 
 }
 
 void loop()
 {
+    static unsigned long lastPrint = 0;
+    static int fixAttempts = 0;
+    
     if (modem.getGPS(&lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2,
                      &year2, &month2, &day2, &hour2, &min2, &sec2)) {
         Serial.println();
-        Serial.print("lat:"); Serial.print(String(lat2, 8)); Serial.print("\t");
-        Serial.print("lon:"); Serial.print(String(lon2, 8)); Serial.println();
-        Serial.print("speed:"); Serial.print(speed2); Serial.print("\t");
-        Serial.print("altitude:"); Serial.print(alt2); Serial.println();
-        Serial.print("year:"); Serial.print(year2);
-        Serial.print(" month:"); Serial.print(month2);
-        Serial.print(" day:"); Serial.print(day2);
-        Serial.print(" hour:"); Serial.print(hour2);
-        Serial.print(" minutes:"); Serial.print(min2);
-        Serial.print(" second:"); Serial.print(sec2); Serial.println();
+        Serial.print("GPS Fix #"); Serial.print(++fixAttempts); Serial.println(":");
+        Serial.print("Latitude: "); Serial.print(String(lat2, 8)); Serial.println();
+        Serial.print("Longitude: "); Serial.print(String(lon2, 8)); Serial.println();
+        Serial.print("Speed: "); Serial.print(speed2); Serial.println(" knots");
+        Serial.print("Altitude: "); Serial.print(alt2); Serial.println(" meters");
+        Serial.print("Satellites in view: "); Serial.print(vsat2); Serial.println();
+        Serial.print("Satellites used: "); Serial.print(usat2); Serial.println();
+        Serial.print("Accuracy: "); Serial.print(accuracy2); Serial.println();
+        Serial.print("Date/Time: ");
+        Serial.print(year2); Serial.print("-");
+        Serial.print(month2); Serial.print("-");
+        Serial.print(day2); Serial.print(" ");
+        Serial.print(hour2); Serial.print(":");
+        Serial.print(min2); Serial.print(":");
+        Serial.print(sec2); Serial.println();
         Serial.println();
 
         // After successful positioning, the PMU charging indicator flashes quickly
         PMU.setChargingLedMode(XPOWERS_CHG_LED_BLINK_4HZ);
+        lastPrint = millis();
     } else {
         // Blinking PMU charging indicator
         PMU.setChargingLedMode(level ? XPOWERS_CHG_LED_ON : XPOWERS_CHG_LED_OFF);
         level ^= 1;
+        
+        // Print status every 10 seconds
+        if (millis() - lastPrint > 10000) {
+            Serial.print("Waiting for GPS fix... Attempts: ");
+            Serial.println(fixAttempts);
+            lastPrint = millis();
+        }
     }
     delay(1000);
 }
