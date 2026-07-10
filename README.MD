@@ -107,6 +107,9 @@ Please enter the upload mode manually.
     4. Release the BOOT button
     5. Upload sketch
 17. If you encounter a problem that you cannot register a network, please refer to this [issue#100](https://github.com/Xinyuan-LilyGO/LilyGo-T-SIM7080G/issues/100#issuecomment-2662392543)
+18. How to connect an external 5V circuit to the board?
+    1. The SIM7080G-PMU version does not have a pre-installed 5V external pin. If you need to connect an external 5V source but don't want to use a USB-C connection, you can solder the external 5V positive terminal to the pad as shown in the diagram below.
+    ![](https://raw.githubusercontent.com/Xinyuan-LilyGO/LilyGo-Modem-Series/refs/heads/main/docs/en/SimshieldUsageGuide/images/H606-SIM7080.png)
 
 ## 4️⃣ Where to buy:
 
