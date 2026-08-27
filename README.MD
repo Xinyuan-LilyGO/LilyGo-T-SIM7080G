@@ -19,7 +19,7 @@ examples
 ├─BLE5_periodic_advertising         # Official BLE5 Example    
 ├─BLE5_periodic_sync                # Official BLE5 Example
 ├─MinimalCameraExample              # Example of camera use
-├─MinimalDeepSleepExample           # DeepSleep example
+├─MinimalDeepSleepExample           # DeepSleep example,Sleep about ~360uA
 ├─MinimalLowBattPowerExample        # Low Battery example
 ├─MinimalModemGPSExample            # SIM7080G GPS example
 ├─MinimalModemNBIOTExample          # SIM7080G NBIOT example
@@ -75,9 +75,9 @@ examples
 
 ### Use reference
 
-|   Product   |                             Youtube  link                             |                  explanation                    | Status | 
-| :---------: | :-------------------------------------------------------------------: |:-----------------------------------------------:| :----: |
-| T -7080G | [Youtube link](https://www.youtube.com/watch?v=lGctqLDGHz4) |    How to update the firmware of SIM7080G series products     |   ✅    |
+|    Product    |                        Youtube  link                        |                      explanation                       | Status |
+| :-----------: | :---------------------------------------------------------: | :----------------------------------------------------: | :----: |
+|   T -7080G    | [Youtube link](https://www.youtube.com/watch?v=lGctqLDGHz4) | How to update the firmware of SIM7080G series products |   ✅    |
 | LilyGo device | [Youtube link](https://www.youtube.com/watch?v=f3BybP3L7ls) |    How to enter boot mode to download the firmware     |   ✅    |
 
 ## 3️⃣ Tips
@@ -188,3 +188,9 @@ Please enter the upload mode manually.
 | 64ms on/ 3000ms off  | Already registered on the network (PS domain registration successful)                                     |
 | 64ms on/ 300ms off   | During data transmission (PPP dial-up state and when using internal TCP/FTP/HTTP and other data services) |
 | Off                  | Power off or PSM sleep mode                                                                               |
+
+## DeepSleep Current
+
+- Average: ~360uA
+
+![](./image/Deep_2026-08-27_11-14-39.png)

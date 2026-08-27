@@ -130,3 +130,9 @@ examples
 | Modem          | Camera            | ESP32S3 | SDCard | Level conversion |
 | -------------- | ----------------- | ------- | ------ | ---------------- |
 | DC3/BLDO2(GPS) | ALDO1/ALDO2/ALDO4 | DC1     | ALDO3  | BLDO1            |
+
+## 深度睡眠电流
+
+- Average: ~360uA
+
+![](./image/Deep_2026-08-27_11-14-39.png)
