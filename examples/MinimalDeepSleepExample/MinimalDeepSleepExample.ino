@@ -149,6 +149,16 @@ void setup()
         }
     }
 
+    delay(5000);
+
+    // Print modem software version
+    String res;
+    modem.sendAT("+SIMCOMATI");
+    modem.waitResponse(10000UL, res);
+    Serial.println(res);
+    delay(1000);
+
+
     // You can turn off the modem or PMU power supply voltage
     // It can also keep the SIM7080G powered
     Serial.println("Power off modem");
