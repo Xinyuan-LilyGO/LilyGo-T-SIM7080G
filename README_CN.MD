@@ -133,6 +133,7 @@ examples
 
 ## 深度睡眠电流
 
-- Average: ~360uA
+- 平均: ~360uA
+- 示例: [MinimalDeepSleepExample](./examples/MinimalDeepSleepExample/MinimalDeepSleepExample.ino)
 
 ![](./image/Deep_2026-08-27_11-14-39.png)

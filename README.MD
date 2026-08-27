@@ -192,5 +192,6 @@ Please enter the upload mode manually.
 ## DeepSleep Current
 
 - Average: ~360uA
+- Example: [MinimalDeepSleepExample](./examples/MinimalDeepSleepExample/MinimalDeepSleepExample.ino)
 
 ![](./image/Deep_2026-08-27_11-14-39.png)
