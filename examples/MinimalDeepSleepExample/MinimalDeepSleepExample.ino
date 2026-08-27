@@ -23,7 +23,7 @@ XPowersPMU  PMU;
 
 // Set to wake up every 5 minutes to send positioning coordinates to the platform
 #define uS_TO_S_FACTOR 1000000ULL                       /* Conversion factor for micro seconds to seconds */
-#define TIME_TO_SLEEP  20                             /* Time ESP32 will go to sleep (in seconds) */
+#define TIME_TO_SLEEP  3*60                             /* Time ESP32 will go to sleep (in seconds) */
 
 
 #ifdef DUMP_AT_COMMANDS
@@ -46,6 +46,12 @@ void setup()
     while (!Serial);
 
     delay(3000);
+
+
+    Serial.printf("Use sketch : %s\n", __FILE__);
+    Serial.print("Use modem: "); Serial.println("T-SIM7080G-PMU Version");
+    Serial.printf("Arduino esp32 core version: %d.%d.%d\n", ESP_ARDUINO_VERSION_MAJOR, ESP_ARDUINO_VERSION_MINOR, ESP_ARDUINO_VERSION_PATCH);
+
 
     getWakeupReason();
 
@@ -73,6 +79,28 @@ void setup()
     // TS Pin detection must be disable, otherwise it cannot be charged
     PMU.disableTSPinMeasure();
 
+
+    // Turn off not use power channel
+    PMU.disableDC2();
+    PMU.disableDC4();
+    PMU.disableDC5();
+    PMU.disableALDO1();
+    PMU.disableALDO2();
+    PMU.disableALDO3();
+    PMU.disableALDO4();
+    PMU.disableBLDO1();
+    PMU.disableBLDO2();
+    PMU.disableCPUSLDO();
+    PMU.disableDLDO1();
+    PMU.disableDLDO2();
+    PMU.enableBLDO1();
+    // Clear interrupt status
+    PMU.clearIrqStatus();
+    // Disable pmu adc measurement
+    PMU.disableVbusVoltageMeasure();
+    PMU.disableBattVoltageMeasure();
+    PMU.disableSystemVoltageMeasure();
+    PMU.disableTemperatureMeasure();
 
     /*********************************
      * step 2 : start modem
@@ -123,10 +151,17 @@ void setup()
 
     // You can turn off the modem or PMU power supply voltage
     // It can also keep the SIM7080G powered
-    // modem.poweroff();
+    Serial.println("Power off modem");
+    modem.poweroff();
+    // Delay some time to let the modem power off completely
+    delay(10000);
+    Serial.println("Power off PMU");
+    PMU.disableDC3();
+    PMU.disableBLDO2();
 
-    // PMU.disableDC3();
-    // PMU.disableBLDO2();
+    // After sleep current about ~360uA
+
+    Serial1.end();
 
     int delaySeconds = 5;
     while (delaySeconds--) {
